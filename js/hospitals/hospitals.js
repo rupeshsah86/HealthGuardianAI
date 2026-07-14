@@ -26,6 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
   _bindControls();
 });
 
+
+
+// update this code 
+
 function _initMap() {
   if (typeof L === 'undefined') { console.warn('Leaflet not loaded'); return; }
   map = L.map('hospital-map').setView(
