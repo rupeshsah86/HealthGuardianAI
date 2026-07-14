@@ -24,6 +24,10 @@ export function initNavbar() {
   _setActiveLink();
 }
 
+
+
+
+//update code in nav.js
 // ── Scroll Effect ──────────────────────────────
 function _bindScrollEffect() {
   const navbar = document.querySelector('.navbar');
