@@ -276,5 +276,4 @@ function showFieldError(fieldId, message) {
     field.classList.remove('error');
     err.remove();
   }, { once: true });
-  ss
 }
