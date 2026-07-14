@@ -7,18 +7,28 @@ import { haversineDistance, formatDistance, getCurrentPosition } from '../utils/
 import Toast from '../components/toast.js';
 import AppConfig from '../config/app.config.js';
 
+// Inline data — no fetch needed, works on file:// and any server
+const BLOODBANKS_DATA = [
+  { id:1, name:'PSG Blood Bank', address:'PSG Hospitals, Peelamedu, Coimbatore - 641004', rating:4.8, phone:'+91 422 2570170', lat:11.0186, lng:77.0199, bloodTypes:{'A+':'available','A-':'limited','B+':'available','B-':'critical','AB+':'available','AB-':'limited','O+':'critical','O-':'limited'} },
+  { id:2, name:'KMCH Blood Bank', address:'Kovai Medical Center, Avanashi Road, Coimbatore - 641014', rating:4.7, phone:'+91 422 4323800', lat:11.0274, lng:77.0262, bloodTypes:{'A+':'available','A-':'critical','B+':'available','B-':'limited','AB+':'limited','AB-':'critical','O+':'critical','O-':'critical'} },
+  { id:3, name:'Government Blood Bank', address:'Coimbatore Medical College, Coimbatore - 641018', rating:4.3, phone:'+91 422 2245000', lat:11.0025, lng:77.0089, bloodTypes:{'A+':'limited','A-':'limited','B+':'available','B-':'limited','AB+':'critical','AB-':'critical','O+':'available','O-':'limited'} },
+  { id:4, name:'Rotary Blood Bank', address:'RS Puram, Coimbatore - 641002', rating:4.6, phone:'+91 422 2388888', lat:11.0039, lng:76.9618, bloodTypes:{'A+':'available','A-':'available','B+':'available','B-':'limited','AB+':'available','AB-':'limited','O+':'available','O-':'limited'} },
+  { id:5, name:'Lions Blood Bank', address:'Gandhipuram, Coimbatore - 641012', rating:4.5, phone:'+91 422 2498888', lat:11.0356, lng:77.0372, bloodTypes:{'A+':'available','A-':'limited','B+':'critical','B-':'critical','AB+':'limited','AB-':'critical','O+':'available','O-':'critical'} },
+];
+
 let map, markers = [], currentLocation = null, currentMarker = null;
 let bloodBanks = [], activeSort = 'distance', selectedType = '';
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
   _initMap();
-  bloodBanks = await _loadData();
+  bloodBanks = BLOODBANKS_DATA;
   _renderBloodTypeGrid();
   _filter();
   _bindControls();
 });
 
 function _initMap() {
+  if (typeof L === 'undefined') { console.warn('Leaflet not loaded'); return; }
   map = L.map('bloodbank-map').setView(
     [AppConfig.map.defaultCenter.lat, AppConfig.map.defaultCenter.lng],
     AppConfig.map.defaultZoom
@@ -26,29 +36,17 @@ function _initMap() {
   L.tileLayer(AppConfig.map.tileUrl, { attribution: AppConfig.map.attribution }).addTo(map);
 }
 
-async function _loadData() {
-  try {
-    const res = await fetch('../data/bloodbanks.json');
-    return await res.json();
-  } catch {
-    Toast.error('Could not load blood bank data.');
-    return [];
-  }
-}
-
-// ── Blood Type Overview Grid ─────────────────────
 function _renderBloodTypeGrid() {
   const grid = document.getElementById('bloodTypesGrid');
   if (!grid) return;
 
   const types = ['A+','A-','B+','B-','AB+','AB-','O+','O-'];
-  // Aggregate availability across all banks
   const agg = {};
   types.forEach(t => {
     const statuses = bloodBanks.map(b => b.bloodTypes[t]);
-    if (statuses.includes('available'))     agg[t] = 'available';
-    else if (statuses.includes('limited'))  agg[t] = 'limited';
-    else                                    agg[t] = 'critical';
+    if (statuses.includes('available'))    agg[t] = 'available';
+    else if (statuses.includes('limited')) agg[t] = 'limited';
+    else                                   agg[t] = 'critical';
   });
 
   grid.innerHTML = types.map(t => `
@@ -61,31 +59,30 @@ function _renderBloodTypeGrid() {
     chip.addEventListener('click', () => {
       const type = chip.dataset.type;
       selectedType = selectedType === type ? '' : type;
-      document.getElementById('bloodTypeFilter').value = selectedType;
+      const sel = document.getElementById('bloodTypeFilter');
+      if (sel) sel.value = selectedType;
       _renderBloodTypeGrid();
       _filter();
     });
   });
 }
 
-// ── Render List ──────────────────────────────────
 function _renderList(data) {
   const list  = document.getElementById('bloodbankList');
   const count = document.getElementById('resultCount');
   if (!list) return;
 
-  count.textContent = `${data.length} blood bank${data.length !== 1 ? 's' : ''} found`;
+  if (count) count.textContent = `${data.length} blood bank${data.length !== 1 ? 's' : ''} found`;
 
-  markers.forEach(m => map.removeLayer(m));
-  markers = [];
+  if (map) { markers.forEach(m => map.removeLayer(m)); markers = []; }
 
   if (!data.length) {
-    list.innerHTML = `<div style="padding:var(--space-8);text-align:center;color:var(--text-muted)"><i class="fas fa-droplet" style="font-size:2rem;margin-bottom:var(--space-3);display:block;opacity:0.3"></i><p>No blood banks found. Try adjusting your filters.</p></div>`;
+    list.innerHTML = `<div style="padding:2rem;text-align:center;color:#778da9"><i class="fas fa-droplet" style="font-size:2rem;margin-bottom:1rem;display:block;opacity:0.3"></i><p>No blood banks found. Try adjusting your filters.</p></div>`;
     return;
   }
 
   list.innerHTML = data.map(b => {
-    const dist = currentLocation ? haversineDistance(currentLocation.lat, currentLocation.lng, b.lat, b.lng) : null;
+    const dist  = currentLocation ? haversineDistance(currentLocation.lat, currentLocation.lng, b.lat, b.lng) : null;
     const avail = selectedType ? b.bloodTypes[selectedType] : _overallStatus(b);
     return `
       <div class="location-card" data-id="${b.id}" tabindex="0" role="button" aria-label="${b.name}">
@@ -100,7 +97,7 @@ function _renderList(data) {
           <div class="meta-item"><i class="fas fa-map-marker-alt"></i> ${b.address}</div>
           <div class="meta-item"><i class="fas fa-phone"></i> ${b.phone}</div>
           <div class="meta-item"><i class="fas fa-droplet"></i>
-            <span class="wait-badge ${avail}">${avail.charAt(0).toUpperCase() + avail.slice(1)}</span>
+            <span class="wait-badge ${avail === 'available' ? 'low' : avail === 'limited' ? 'medium' : 'high'}">${avail.charAt(0).toUpperCase() + avail.slice(1)}</span>
           </div>
         </div>
         <div class="card-actions">
@@ -111,24 +108,24 @@ function _renderList(data) {
       </div>`;
   }).join('');
 
-  data.forEach(b => {
-    const marker = L.marker([b.lat, b.lng]).addTo(map)
-      .bindPopup(`<strong>${b.name}</strong><br>${b.address}`);
-    markers.push(marker);
-  });
-
-  if (markers.length) {
-    const group = L.featureGroup(markers);
-    if (currentMarker) group.addLayer(currentMarker);
-    map.fitBounds(group.getBounds().pad(0.2));
+  if (map) {
+    data.forEach(b => {
+      const marker = L.marker([b.lat, b.lng]).addTo(map)
+        .bindPopup(`<strong>${b.name}</strong><br>${b.address}`);
+      markers.push(marker);
+    });
+    if (markers.length) {
+      const group = L.featureGroup(markers);
+      if (currentMarker) group.addLayer(currentMarker);
+      map.fitBounds(group.getBounds().pad(0.2));
+    }
   }
 
   list.querySelectorAll('.location-card').forEach((card, i) => {
     const activate = () => {
       list.querySelectorAll('.location-card').forEach(c => c.classList.remove('active'));
       card.classList.add('active');
-      map.setView([data[i].lat, data[i].lng], 15);
-      markers[i]?.openPopup();
+      if (map) { map.setView([data[i].lat, data[i].lng], 15); markers[i]?.openPopup(); }
     };
     card.addEventListener('click', activate);
     card.addEventListener('keydown', e => { if (e.key === 'Enter') activate(); });
@@ -163,7 +160,6 @@ function _overallStatus(b) {
   return 'critical';
 }
 
-// ── Filter ───────────────────────────────────────
 function _filter() {
   const bloodType = document.getElementById('bloodTypeFilter')?.value || '';
   const maxDist   = parseInt(document.getElementById('distanceFilter')?.value || '50');
@@ -203,22 +199,23 @@ function _filter() {
   _renderList(result);
 }
 
-// ── Controls ─────────────────────────────────────
 function _bindControls() {
   document.getElementById('searchBtn')?.addEventListener('click', _filter);
 
   document.getElementById('currentLocationBtn')?.addEventListener('click', async () => {
     const btn = document.getElementById('currentLocationBtn');
-    btn.innerHTML = '<i class="fas fa-spinner animate-spin"></i>';
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
     try {
       const pos = await getCurrentPosition();
       currentLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-      if (currentMarker) map.removeLayer(currentMarker);
-      currentMarker = L.marker([currentLocation.lat, currentLocation.lng], {
-        icon: L.divIcon({ className: '', html: '<i class="fas fa-location-dot" style="color:#e63946;font-size:24px;"></i>', iconSize: [24, 24], iconAnchor: [12, 24] })
-      }).addTo(map).bindPopup('Your location');
+      if (map) {
+        if (currentMarker) map.removeLayer(currentMarker);
+        currentMarker = L.marker([currentLocation.lat, currentLocation.lng], {
+          icon: L.divIcon({ className: '', html: '<i class="fas fa-location-dot" style="color:#e63946;font-size:24px;"></i>', iconSize: [24, 24], iconAnchor: [12, 24] })
+        }).addTo(map).bindPopup('Your location');
+        map.setView([currentLocation.lat, currentLocation.lng], 13);
+      }
       document.getElementById('locationInput').value = 'Current Location';
-      map.setView([currentLocation.lat, currentLocation.lng], 13);
       _filter();
       Toast.success('Location detected!');
     } catch {
@@ -237,7 +234,6 @@ function _bindControls() {
     });
   });
 
-  // Request modal
   document.getElementById('closeRequestModal')?.addEventListener('click', _closeRequestModal);
   document.getElementById('requestModal')?.addEventListener('click', e => {
     if (e.target === document.getElementById('requestModal')) _closeRequestModal();
@@ -253,7 +249,10 @@ function _openRequestModal(bank) {
   const modal = document.getElementById('requestModal');
   const title = document.getElementById('requestModalTitle');
   if (title) title.textContent = `Request Blood — ${bank.name}`;
-  if (selectedType) document.getElementById('requestBloodType').value = selectedType;
+  if (selectedType) {
+    const sel = document.getElementById('requestBloodType');
+    if (sel) sel.value = selectedType;
+  }
   modal?.classList.add('open');
   document.body.style.overflow = 'hidden';
 }

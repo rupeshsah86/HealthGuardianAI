@@ -7,18 +7,27 @@ import { haversineDistance, formatDistance, getCurrentPosition, debounce } from 
 import Toast from '../components/toast.js';
 import AppConfig from '../config/app.config.js';
 
+// Inline data — no fetch needed, works on file:// and any server
+const HOSPITALS_DATA = [
+  { id:1, name:'PSG Hospitals', address:'Peelamedu, Coimbatore - 641004', rating:4.8, waitTime:20, specialties:['emergency','cardiology','neurology','orthopedics'], phone:'+91 422 2570170', lat:11.0186, lng:77.0199, beds:1200, bedsAvailable:45, type:'Multi-Specialty' },
+  { id:2, name:'Kovai Medical Center (KMCH)', address:'Avanashi Road, Coimbatore - 641014', rating:4.7, waitTime:35, specialties:['emergency','pediatrics','oncology','cardiology'], phone:'+91 422 4323800', lat:11.0274, lng:77.0262, beds:800, bedsAvailable:22, type:'Multi-Specialty' },
+  { id:3, name:'G. Kuppuswamy Naidu Memorial Hospital', address:'Pappanaickenpalayam, Coimbatore - 641037', rating:4.5, waitTime:45, specialties:['emergency','general surgery','urology','ophthalmology'], phone:'+91 422 2245000', lat:11.0025, lng:77.0089, beds:600, bedsAvailable:18, type:'General' },
+  { id:4, name:'Sri Ramakrishna Hospital', address:'395, Sarojini Naidu Road, Coimbatore - 641044', rating:4.6, waitTime:30, specialties:['emergency','pediatrics','dermatology','ENT'], phone:'+91 422 4500000', lat:11.0039, lng:76.9618, beds:500, bedsAvailable:31, type:'Multi-Specialty' },
+  { id:5, name:'Aravind Eye Hospital', address:'Avanishi Road, Coimbatore - 641014', rating:4.9, waitTime:15, specialties:['ophthalmology'], phone:'+91 422 4365000', lat:11.0356, lng:77.0372, beds:200, bedsAvailable:12, type:'Specialty' },
+];
+
 let map, markers = [], currentLocation = null, currentMarker = null;
 let hospitals = [], activeSort = 'distance';
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
   _initMap();
-  hospitals = await _loadHospitals();
+  hospitals = HOSPITALS_DATA;
   _renderList(hospitals);
   _bindControls();
 });
 
-// ── Map Init ────────────────────────────────────
 function _initMap() {
+  if (typeof L === 'undefined') { console.warn('Leaflet not loaded'); return; }
   map = L.map('hospital-map').setView(
     [AppConfig.map.defaultCenter.lat, AppConfig.map.defaultCenter.lng],
     AppConfig.map.defaultZoom
@@ -26,31 +35,20 @@ function _initMap() {
   L.tileLayer(AppConfig.map.tileUrl, { attribution: AppConfig.map.attribution }).addTo(map);
 }
 
-// ── Load Data ───────────────────────────────────
-async function _loadHospitals() {
-  try {
-    const res = await fetch('../data/hospitals.json');
-    return await res.json();
-  } catch {
-    Toast.error('Could not load hospital data.');
-    return [];
-  }
-}
-
-// ── Render ──────────────────────────────────────
 function _renderList(data) {
   const list  = document.getElementById('hospitalList');
   const count = document.getElementById('resultCount');
   if (!list) return;
 
-  count.textContent = `${data.length} hospital${data.length !== 1 ? 's' : ''} found`;
+  if (count) count.textContent = `${data.length} hospital${data.length !== 1 ? 's' : ''} found`;
 
-  // Clear old markers
-  markers.forEach(m => map.removeLayer(m));
-  markers = [];
+  if (map) {
+    markers.forEach(m => map.removeLayer(m));
+    markers = [];
+  }
 
   if (!data.length) {
-    list.innerHTML = `<div style="padding:var(--space-8);text-align:center;color:var(--text-muted)"><i class="fas fa-hospital" style="font-size:2rem;margin-bottom:var(--space-3);display:block;opacity:0.3"></i><p>No hospitals found. Try adjusting your filters.</p></div>`;
+    list.innerHTML = `<div style="padding:2rem;text-align:center;color:#778da9"><i class="fas fa-hospital" style="font-size:2rem;margin-bottom:1rem;display:block;opacity:0.3"></i><p>No hospitals found. Try adjusting your filters.</p></div>`;
     return;
   }
 
@@ -81,33 +79,31 @@ function _renderList(data) {
       </div>`;
   }).join('');
 
-  // Add map markers
-  data.forEach(h => {
-    const marker = L.marker([h.lat, h.lng])
-      .addTo(map)
-      .bindPopup(`<strong>${h.name}</strong><br>${h.address}<br>Wait: ${h.waitTime} min`);
-    markers.push(marker);
-  });
+  if (map) {
+    data.forEach(h => {
+      const marker = L.marker([h.lat, h.lng])
+        .addTo(map)
+        .bindPopup(`<strong>${h.name}</strong><br>${h.address}<br>Wait: ${h.waitTime} min`);
+      markers.push(marker);
+    });
 
-  if (markers.length) {
-    const group = L.featureGroup(markers);
-    if (currentMarker) group.addLayer(currentMarker);
-    map.fitBounds(group.getBounds().pad(0.2));
+    if (markers.length) {
+      const group = L.featureGroup(markers);
+      if (currentMarker) group.addLayer(currentMarker);
+      map.fitBounds(group.getBounds().pad(0.2));
+    }
   }
 
-  // Card click → map focus
   list.querySelectorAll('.location-card').forEach((card, i) => {
     const activate = () => {
       list.querySelectorAll('.location-card').forEach(c => c.classList.remove('active'));
       card.classList.add('active');
-      map.setView([data[i].lat, data[i].lng], 15);
-      markers[i]?.openPopup();
+      if (map) { map.setView([data[i].lat, data[i].lng], 15); markers[i]?.openPopup(); }
     };
     card.addEventListener('click', activate);
     card.addEventListener('keydown', e => { if (e.key === 'Enter') activate(); });
   });
 
-  // Directions buttons
   list.querySelectorAll('.btn-directions').forEach(btn => {
     btn.addEventListener('click', e => {
       e.stopPropagation();
@@ -122,7 +118,6 @@ function _renderList(data) {
   });
 }
 
-// ── Filter & Sort ───────────────────────────────
 function _filter() {
   const specialty = document.getElementById('specialtyFilter')?.value || '';
   const maxDist   = parseInt(document.getElementById('distanceFilter')?.value || '50');
@@ -144,7 +139,6 @@ function _filter() {
     );
   }
 
-  // Sort
   if (activeSort === 'distance' && currentLocation) {
     result.sort((a, b) =>
       haversineDistance(currentLocation.lat, currentLocation.lng, a.lat, a.lng) -
@@ -159,25 +153,26 @@ function _filter() {
   _renderList(result);
 }
 
-// ── Controls ────────────────────────────────────
 function _bindControls() {
   document.getElementById('searchBtn')?.addEventListener('click', _filter);
   document.getElementById('locationInput')?.addEventListener('keydown', e => { if (e.key === 'Enter') _filter(); });
 
   document.getElementById('currentLocationBtn')?.addEventListener('click', async () => {
     const btn = document.getElementById('currentLocationBtn');
-    btn.innerHTML = '<i class="fas fa-spinner animate-spin"></i>';
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
     try {
       const pos = await getCurrentPosition();
       currentLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
 
-      if (currentMarker) map.removeLayer(currentMarker);
-      currentMarker = L.marker([currentLocation.lat, currentLocation.lng], {
-        icon: L.divIcon({ className: '', html: '<i class="fas fa-location-dot" style="color:#e63946;font-size:24px;"></i>', iconSize: [24, 24], iconAnchor: [12, 24] })
-      }).addTo(map).bindPopup('Your location');
+      if (map) {
+        if (currentMarker) map.removeLayer(currentMarker);
+        currentMarker = L.marker([currentLocation.lat, currentLocation.lng], {
+          icon: L.divIcon({ className: '', html: '<i class="fas fa-location-dot" style="color:#e63946;font-size:24px;"></i>', iconSize: [24, 24], iconAnchor: [12, 24] })
+        }).addTo(map).bindPopup('Your location');
+        map.setView([currentLocation.lat, currentLocation.lng], 13);
+      }
 
       document.getElementById('locationInput').value = 'Current Location';
-      map.setView([currentLocation.lat, currentLocation.lng], 13);
       _filter();
       Toast.success('Location detected!');
     } catch {

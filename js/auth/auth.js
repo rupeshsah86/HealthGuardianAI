@@ -9,7 +9,7 @@
 import StorageService from '../storage/storage.service.js';
 import { isValidEmail, validatePassword, sanitize } from '../utils/helpers.js';
 import Toast from '../components/toast.js';
-import AppConfig from '../config/app.config.js';
+import AppConfig, { getRoute } from '../config/app.config.js';
 
 const { keys } = AppConfig.storage;
 
@@ -39,7 +39,7 @@ export function isAuthenticated() {
 export function logout() {
   StorageService.remove(keys.currentUser);
   Toast.info('You have been logged out.');
-  setTimeout(() => { window.location.href = AppConfig.routes.home; }, 800);
+  setTimeout(() => { window.location.href = getRoute('home'); }, 800);
 }
 
 // ─────────────────────────────────────────────
@@ -165,7 +165,7 @@ export function bindLoginForm() {
 
   // Redirect if already logged in
   if (isAuthenticated()) {
-    window.location.href = AppConfig.routes.home;
+    window.location.href = getRoute('home');
     return;
   }
 
@@ -186,7 +186,7 @@ export function bindLoginForm() {
 
       if (result.success) {
         Toast.success('Welcome back!');
-        setTimeout(() => { window.location.href = AppConfig.routes.home; }, 800);
+        setTimeout(() => { window.location.href = getRoute('home'); }, 800);
       } else {
         Toast.error(result.message);
         showFieldError('loginPassword', result.message);
@@ -203,7 +203,7 @@ export function bindRegisterForm() {
   if (!form) return;
 
   if (isAuthenticated()) {
-    window.location.href = AppConfig.routes.home;
+    window.location.href = getRoute('home');
     return;
   }
 
@@ -224,7 +224,7 @@ export function bindRegisterForm() {
 
       if (result.success) {
         Toast.success('Account created! Redirecting...');
-        setTimeout(() => { window.location.href = AppConfig.routes.home; }, 1000);
+        setTimeout(() => { window.location.href = getRoute('home'); }, 1000);
       } else {
         Toast.error(result.message);
       }

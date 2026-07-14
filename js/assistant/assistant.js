@@ -123,7 +123,15 @@ function _initVoice() {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SpeechRecognition) {
     btn.disabled = true;
-    status.textContent = 'Voice recognition not supported in this browser.';
+    if (status) status.textContent = 'Voice not supported. Use text input instead.';
+    return;
+  }
+
+  // Check if we're on a context where speech is allowed
+  const isSecure = location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+  if (!isSecure) {
+    btn.disabled = true;
+    if (status) status.textContent = 'Voice requires HTTPS. Use text input instead.';
     return;
   }
 
@@ -165,7 +173,14 @@ function _initVoice() {
     recording = false;
     btn.classList.remove('recording');
     btn.innerHTML = '<i class="fas fa-microphone"></i>';
-    status.textContent = 'Error: ' + e.error;
+    if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+      status.textContent = 'Microphone access denied. Please allow mic in browser settings.';
+      Toast.error('Allow microphone access in your browser to use voice input.');
+    } else if (e.error === 'no-speech') {
+      status.textContent = 'No speech detected. Try again.';
+    } else {
+      status.textContent = 'Voice unavailable. Please use text input instead.';
+    }
   };
 
   analyzeBtn?.addEventListener('click', () => {

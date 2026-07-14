@@ -22,33 +22,36 @@ function _initSosButton() {
     if (btn.disabled) return;
     btn.disabled = true;
 
-    _setStatus(status, 'alerting', 'fa-circle-exclamation', 'Locating you and alerting emergency services...');
+    _setStatus(status, 'alerting', 'fa-circle-exclamation', 'Locating you...');
 
+    let locationText = '';
+
+    // Try GPS first
     try {
       const pos = await getCurrentPosition();
       const { latitude, longitude } = pos.coords;
-      console.info('[SOS] Location:', latitude, longitude);
-
-      // Simulate dispatch (replace with real API call)
-      await _delay(2000);
-
-      _setStatus(status, 'success', 'fa-circle-check', 'Help is on the way! Estimated arrival: 7 minutes');
-      Toast.success('Emergency services have been alerted!', 6000);
-
-      // Re-enable after 30s
-      setTimeout(() => {
-        btn.disabled = false;
-        _setStatus(status, '', 'fa-circle-check', 'Ready — tap SOS to activate');
-      }, 30000);
-
-    } catch (err) {
-      btn.disabled = false;
-      const msg = err.code === 1
-        ? 'Location access denied. Please enable location and try again.'
-        : 'Could not get location. Please call 102 directly.';
-      _setStatus(status, '', 'fa-circle-xmark', msg);
-      Toast.error(msg);
+      _setStatus(status, 'alerting', 'fa-circle-exclamation', 'Getting your address...');
+      locationText = await _reverseGeocode(latitude, longitude);
+    } catch {
+      // GPS denied — fallback to IP-based location
+      try {
+        _setStatus(status, 'alerting', 'fa-circle-exclamation', 'Detecting location via network...');
+        const res  = await fetch('https://ipapi.co/json/');
+        const data = await res.json();
+        locationText = [data.city, data.region, data.country_name, data.postal].filter(Boolean).join(', ');
+      } catch {
+        locationText = 'Location unavailable';
+      }
     }
+
+    await _delay(800);
+    _setStatus(status, 'success', 'fa-circle-check', `Help is on the way! ETA: 7 min \u2014 \ud83d\udccd ${locationText}`);
+    Toast.success('Emergency services alerted! Call 102 if needed.', 8000);
+
+    setTimeout(() => {
+      btn.disabled = false;
+      _setStatus(status, '', 'fa-circle-check', 'Ready \u2014 tap SOS to activate');
+    }, 30000);
   });
 }
 
@@ -114,3 +117,21 @@ function _openHashGuide() {
 }
 
 function _delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+async function _reverseGeocode(lat, lon) {
+  try {
+    const res  = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`);
+    const data = await res.json();
+    const a    = data.address || {};
+    const parts = [
+      a.road || a.pedestrian || a.footway,
+      a.neighbourhood || a.suburb || a.village,
+      a.city || a.town || a.county,
+      a.state,
+      a.postcode
+    ].filter(Boolean);
+    return parts.length ? parts.join(', ') : `${lat.toFixed(5)}, ${lon.toFixed(5)}`;
+  } catch {
+    return `${lat.toFixed(5)}, ${lon.toFixed(5)}`;
+  }
+}

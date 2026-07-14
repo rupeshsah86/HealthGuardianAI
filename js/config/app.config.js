@@ -12,7 +12,7 @@ const AppConfig = Object.freeze({
     tagline: 'Emergency Healthcare AI Platform',
     supportEmail: 'help@healthguardian.com',
     supportPhone: '1-800-HELP',
-    emergencyPhone: '+977-9829275143',
+    emergencyPhone: '108',
   },
 
   storage: {
@@ -40,17 +40,32 @@ const AppConfig = Object.freeze({
     itemsPerPage: 10,
   },
 
-  routes: {
-    // Resolved at runtime relative to root — use getRoute() helper
-    home:       '/index.html',
-    login:      '/pages/login.html',
-    register:   '/pages/register.html',
-    emergency:  '/pages/emergency.html',
-    hospitals:  '/pages/hospitals.html',
-    bloodbank:  '/pages/bloodbank.html',
-    assistant:  '/pages/assistant.html',
-    video:      '/pages/video.html',
+  // Internal route map — use getRoute(key) to resolve correctly
+  _routeMap: {
+    home:       'index.html',
+    login:      'pages/login.html',
+    register:   'pages/register.html',
+    emergency:  'pages/emergency.html',
+    hospitals:  'pages/hospitals.html',
+    bloodbank:  'pages/bloodbank.html',
+    assistant:  'pages/assistant.html',
+    video:      'pages/video.html',
   },
 });
+
+/**
+ * Resolve a route key to a correct relative URL from the current page.
+ * Works from both root (index.html) and subdirectory (pages/*.html).
+ * @param {'home'|'login'|'register'|'emergency'|'hospitals'|'bloodbank'|'assistant'|'video'} key
+ * @returns {string}
+ */
+export function getRoute(key) {
+  const map = AppConfig._routeMap;
+  const target = map[key] || map.home;
+  const depth = window.location.pathname.split('/').filter(Boolean).length;
+  // If we're in a subdirectory (pages/), prefix with ../
+  const prefix = depth > 1 ? '../' : '';
+  return prefix + target;
+}
 
 export default AppConfig;

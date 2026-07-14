@@ -130,20 +130,38 @@
             </div>
           </div>
 
-          <!-- Results Panel -->
-          <div class="results-panel" role="region" aria-label="AI analysis results" aria-live="polite">
-            <div class="results-header">
+          <!-- AI Chatbot Panel -->
+          <div class="chatbot-panel" role="region" aria-label="AI Health Chatbot">
+            <div class="chat-header">
               <div class="ai-avatar-sm"><i class="fas fa-robot"></i></div>
-              <h3>HealthGuardian AI</h3>
-              <div class="online-dot" title="AI Online"></div>
-            </div>
-            <div class="results-body" id="resultsBody">
-              <div class="welcome-state">
-                <div class="welcome-icon"><i class="fas fa-robot"></i></div>
-                <h4>Hello! I'm your AI Health Assistant</h4>
-                <p>Describe your symptoms using text, voice, or an image and I'll provide medical information and recommendations.</p>
-                <p style="margin-top:var(--space-3);font-size:var(--text-xs);color:var(--text-muted)"><i class="fas fa-triangle-exclamation" style="color:var(--color-warning)"></i> Not a substitute for professional medical advice.</p>
+              <div class="chat-header-info">
+                <h3>HealthGuardian AI</h3>
+                <span class="chat-status"><span class="online-dot"></span> Online · Always available</span>
               </div>
+              <button class="chat-clear-btn" id="chatClearBtn" title="Clear chat" aria-label="Clear conversation">
+                <i class="fas fa-rotate-left"></i>
+              </button>
+            </div>
+
+            <div class="chat-messages" id="chatMessages" aria-live="polite" aria-label="Chat messages"></div>
+
+            <div class="chat-quick-replies" id="quickReplies">
+              <button class="quick-reply" data-msg="I have a headache">🤕 Headache</button>
+              <button class="quick-reply" data-msg="I have fever and cough">🤒 Fever & Cough</button>
+              <button class="quick-reply" data-msg="I have chest pain">❤️ Chest Pain</button>
+              <button class="quick-reply" data-msg="I feel dizzy and nauseous">😵 Dizziness</button>
+              <button class="quick-reply" data-msg="What should I do for a burn?">🔥 Burns</button>
+              <button class="quick-reply" data-msg="Someone is choking">😮 Choking</button>
+            </div>
+
+            <div class="chat-input-bar">
+              <button class="chat-voice-btn" id="chatVoiceBtn" aria-label="Voice input">
+                <i class="fas fa-microphone"></i>
+              </button>
+              <input type="text" id="chatInput" class="chat-input" placeholder="Ask me about your symptoms..." aria-label="Type your message" maxlength="300" autocomplete="off">
+              <button class="chat-send-btn" id="chatSendBtn" aria-label="Send message">
+                <i class="fas fa-paper-plane"></i>
+              </button>
             </div>
           </div>
 
