@@ -1,0 +1,247 @@
+/**
+ * Emergency Page Styles
+ * Emergency Healthcare AI Platform
+ */
+
+body { padding-top: var(--navbar-height); }
+.section-pad { padding: var(--space-16) 0; }
+
+/* ── Page Header ── */
+.page-header {
+  background: linear-gradient(135deg, rgba(230,57,70,0.08) 0%, rgba(230,57,70,0.03) 100%);
+  padding: var(--space-12) 0 var(--space-8);
+  border-bottom: 1px solid var(--border-color);
+  text-align: center;
+}
+.page-header .eyebrow { color: var(--color-primary); font-size: var(--text-sm); font-weight: var(--font-semibold); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: var(--space-3); }
+.page-header h1 { font-size: var(--text-4xl); margin-bottom: var(--space-3); }
+.page-header p  { color: var(--text-muted); font-size: var(--text-lg); }
+
+/* ── SOS Section ── */
+.sos-section { background: var(--bg-surface); }
+
+.sos-wrapper {
+  max-width: 860px;
+  margin: 0 auto;
+  background: var(--bg-surface);
+  border-radius: var(--border-radius-xl);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.sos-top {
+  background: linear-gradient(135deg, var(--color-dark-3), var(--color-dark));
+  padding: var(--space-12) var(--space-8);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.sos-top::before {
+  content: '';
+  position: absolute;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(230,57,70,0.15), transparent);
+  top: -200px; left: 50%; transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.sos-top h2 { color: var(--color-white); font-size: var(--text-3xl); margin-bottom: var(--space-2); }
+.sos-top p  { color: rgba(255,255,255,0.6); margin-bottom: var(--space-10); }
+
+.sos-btn-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space-8);
+  position: relative;
+  z-index: 1;
+}
+
+.sos-hints {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.sos-hint {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: rgba(255,255,255,0.55);
+  font-size: var(--text-sm);
+}
+.sos-hint i { color: var(--color-accent); }
+
+.sos-status-bar {
+  padding: var(--space-4) var(--space-8);
+  background: var(--bg-surface-2);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  transition: var(--transition-base);
+  min-height: 56px;
+}
+.sos-status-bar.alerting { background: rgba(230,57,70,0.06); color: var(--color-primary); }
+.sos-status-bar.success  { background: rgba(6,214,160,0.06);  color: var(--color-accent-dark); }
+.sos-status-bar i { font-size: 1.1rem; }
+
+/* ── Emergency Contacts ── */
+.contacts-section { background: var(--bg-body); }
+
+.contacts-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+}
+
+.contact-card {
+  background: var(--bg-surface);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-6);
+  text-align: center;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition-spring);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+.contact-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); color: inherit; }
+.contact-card .contact-icon {
+  width: 60px; height: 60px;
+  border-radius: var(--border-radius-lg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; color: var(--color-white);
+  margin-bottom: var(--space-2);
+}
+.contact-card .contact-name  { font-weight: var(--font-bold); font-size: var(--text-base); color: var(--text-primary); }
+.contact-card .contact-number{ font-size: var(--text-sm); color: var(--text-muted); }
+
+/* ── Accordion Guides ── */
+.guides-section { background: var(--bg-surface); }
+
+.accordion { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--space-4); }
+
+.accordion-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-xs);
+  transition: var(--transition-base);
+}
+.accordion-item.open { box-shadow: var(--shadow-md); border-color: var(--color-primary); }
+
+.accordion-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-6);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: var(--transition-fast);
+}
+.accordion-trigger:hover { background: var(--bg-surface-2); }
+
+.accordion-trigger .acc-icon {
+  width: 44px; height: 44px;
+  border-radius: var(--border-radius);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; color: var(--color-white);
+  flex-shrink: 0;
+}
+.accordion-trigger h3 { flex: 1; font-size: var(--text-lg); color: var(--text-primary); }
+.accordion-trigger .acc-chevron { color: var(--text-muted); transition: transform 0.3s ease; font-size: var(--text-sm); }
+.accordion-item.open .acc-chevron { transform: rotate(180deg); }
+
+.accordion-body {
+  display: none;
+  padding: 0 var(--space-6) var(--space-6);
+  gap: var(--space-8);
+}
+.accordion-item.open .accordion-body { display: flex; }
+
+.guide-steps { flex: 1; }
+.guide-step {
+  display: flex;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+  align-items: flex-start;
+}
+.step-num {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-white);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: var(--font-bold);
+  font-size: var(--text-sm);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.step-fast {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--color-secondary);
+  color: var(--color-white);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: var(--font-extrabold);
+  font-size: var(--text-sm);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.guide-step p { color: var(--text-secondary); font-size: var(--text-sm); line-height: var(--leading-relaxed); }
+
+.guide-img {
+  width: 240px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+}
+.guide-img img {
+  width: 100%;
+  border-radius: var(--border-radius-lg);
+  object-fit: cover;
+  aspect-ratio: 4/3;
+}
+
+/* ── Nearby Help ── */
+.nearby-section { background: var(--bg-body); }
+.nearby-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
+.nearby-card {
+  background: var(--bg-surface);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-8);
+  text-align: center;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-base);
+}
+.nearby-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+.nearby-card i { font-size: 2.5rem; color: var(--color-secondary); margin-bottom: var(--space-4); display: block; }
+.nearby-card h3 { font-size: var(--text-xl); margin-bottom: var(--space-3); }
+.nearby-card p  { color: var(--text-muted); font-size: var(--text-sm); margin-bottom: var(--space-5); }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .contacts-grid { grid-template-columns: repeat(2, 1fr); }
+  .nearby-grid   { grid-template-columns: 1fr; }
+  .accordion-body { flex-direction: column; }
+  .guide-img { width: 100%; order: -1; }
+}
+@media (max-width: 480px) {
+  .contacts-grid { grid-template-columns: repeat(2, 1fr); }
+  .sos-hints { flex-direction: column; align-items: center; }
+}

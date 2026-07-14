@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "name": "PSG Hospitals",
+    "address": "Peelamedu, Coimbatore - 641004",
+    "rating": 4.8,
+    "waitTime": 20,
+    "specialties": ["emergency", "cardiology", "neurology", "orthopedics"],
+    "phone": "+91 422 2570170",
+    "lat": 11.0186,
+    "lng": 77.0199,
+    "beds": 1200,
+    "bedsAvailable": 45,
+    "type": "Multi-Specialty"
+  },
+  {
+    "id": 2,
+    "name": "Kovai Medical Center (KMCH)",
+    "address": "Avanashi Road, Coimbatore - 641014",
+    "rating": 4.7,
+    "waitTime": 35,
+    "specialties": ["emergency", "pediatrics", "oncology", "cardiology"],
+    "phone": "+91 422 4323800",
+    "lat": 11.0274,
+    "lng": 77.0262,
+    "beds": 800,
+    "bedsAvailable": 22,
+    "type": "Multi-Specialty"
+  },
+  {
+    "id": 3,
+    "name": "G. Kuppuswamy Naidu Memorial Hospital",
+    "address": "Pappanaickenpalayam, Coimbatore - 641037",
+    "rating": 4.5,
+    "waitTime": 45,
+    "specialties": ["emergency", "general surgery", "urology", "ophthalmology"],
+    "phone": "+91 422 2245000",
+    "lat": 11.0025,
+    "lng": 77.0089,
+    "beds": 600,
+    "bedsAvailable": 18,
+    "type": "General"
+  },
+  {
+    "id": 4,
+    "name": "Sri Ramakrishna Hospital",
+    "address": "395, Sarojini Naidu Road, Coimbatore - 641044",
+    "rating": 4.6,
+    "waitTime": 30,
+    "specialties": ["emergency", "pediatrics", "dermatology", "ENT"],
+    "phone": "+91 422 4500000",
+    "lat": 11.0039,
+    "lng": 76.9618,
+    "beds": 500,
+    "bedsAvailable": 31,
+    "type": "Multi-Specialty"
+  },
+  {
+    "id": 5,
+    "name": "Aravind Eye Hospital",
+    "address": "Avanishi Road, Coimbatore - 641014",
+    "rating": 4.9,
+    "waitTime": 15,
+    "specialties": ["ophthalmology"],
+    "phone": "+91 422 4365000",
+    "lat": 11.0356,
+    "lng": 77.0372,
+    "beds": 200,
+    "bedsAvailable": 12,
+    "type": "Specialty"
+  }
+]

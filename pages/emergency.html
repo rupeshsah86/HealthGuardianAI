@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Emergency SOS, first aid guides, and emergency contacts — HealthGuardian">
+  <title>Emergency — HealthGuardian</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/pages/emergency.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="../index.html" class="nav-logo">
+        <div class="logo-icon"><i class="fas fa-heartbeat"></i></div>
+        <span class="logo-text">Health<span>Guardian</span></span>
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="../index.html" class="nav-link"><i class="fas fa-house"></i> Home</a></li>
+        <li><a href="emergency.html" class="nav-link active"><i class="fas fa-bell"></i> Emergency</a></li>
+        <li><a href="hospitals.html" class="nav-link"><i class="fas fa-hospital"></i> Hospitals</a></li>
+        <li><a href="assistant.html" class="nav-link"><i class="fas fa-robot"></i> AI Assistant</a></li>
+        <li><a href="video.html" class="nav-link"><i class="fas fa-video"></i> Consult</a></li>
+        <li><a href="bloodbank.html" class="nav-link"><i class="fas fa-droplet"></i> Blood Banks</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode"><i class="fas fa-moon"></i></button>
+        <a href="login.html" class="btn btn-primary btn-sm nav-login-btn"><i class="fas fa-right-to-bracket"></i> Login</a>
+        <div class="profile-dropdown hidden">
+          <button class="profile-trigger">
+            <div class="profile-avatar"></div>
+            <span class="profile-name">User</span>
+            <i class="fas fa-chevron-down profile-chevron"></i>
+          </button>
+          <div class="dropdown-menu">
+            <button class="dropdown-item logout-btn danger"><i class="fas fa-right-from-bracket"></i> Logout</button>
+          </div>
+        </div>
+        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="container">
+        <span class="eyebrow"><i class="fas fa-bell"></i> Emergency Services</span>
+        <h1>Emergency Assistance</h1>
+        <p>Instant SOS, step-by-step guides, and emergency contacts at your fingertips.</p>
+      </div>
+    </div>
+
+    <!-- SOS Section -->
+    <section class="sos-section section-pad" aria-labelledby="sos-heading">
+      <div class="container">
+        <div class="sos-wrapper">
+          <div class="sos-top">
+            <h2 id="sos-heading">Emergency SOS</h2>
+            <p>Press the button below to alert nearby emergency services</p>
+            <div class="sos-btn-wrap">
+              <button class="btn-sos" id="sosBtn" aria-label="Activate Emergency SOS">
+                <div class="sos-ring" aria-hidden="true"></div>
+                <div class="sos-ring sos-ring-2" aria-hidden="true"></div>
+                <i class="fas fa-bell" aria-hidden="true"></i>
+                <span>SOS</span>
+              </button>
+            </div>
+            <div class="sos-hints">
+              <div class="sos-hint"><i class="fas fa-location-dot"></i> Location shared automatically</div>
+              <div class="sos-hint"><i class="fas fa-shield-heart"></i> Alerts nearby responders</div>
+              <div class="sos-hint"><i class="fas fa-clock"></i> Average response: &lt;7 min</div>
+            </div>
+          </div>
+          <div class="sos-status-bar" id="sosStatus" role="status" aria-live="polite">
+            <i class="fas fa-circle-check"></i>
+            <span>Ready — tap SOS to activate</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Emergency Contacts -->
+    <section class="contacts-section section-pad" aria-labelledby="contacts-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">Quick Dial</span>
+          <h2 id="contacts-heading">Emergency Contacts</h2>
+          <p>Tap any card to call immediately.</p>
+        </div>
+        <div class="contacts-grid">
+          <a href="tel:100" class="contact-card" aria-label="Call Police: 100">
+            <div class="contact-icon" style="background:linear-gradient(135deg,#3a56a8,#1e3a8a)"><i class="fas fa-shield-halved"></i></div>
+            <span class="contact-name">Police</span>
+            <span class="contact-number">100</span>
+          </a>
+          <a href="tel:102" class="contact-card" aria-label="Call Ambulance: 102">
+            <div class="contact-icon" style="background:linear-gradient(135deg,#e63946,#c1121f)"><i class="fas fa-truck-medical"></i></div>
+            <span class="contact-name">Ambulance</span>
+            <span class="contact-number">102</span>
+          </a>
+          <a href="tel:101" class="contact-card" aria-label="Call Fire Department: 101">
+            <div class="contact-icon" style="background:linear-gradient(135deg,#f4a261,#c47a2a)"><i class="fas fa-fire-extinguisher"></i></div>
+            <span class="contact-name">Fire Dept.</span>
+            <span class="contact-number">101</span>
+          </a>
+          <a href="tel:1800222" class="contact-card" aria-label="Call Poison Control">
+            <div class="contact-icon" style="background:linear-gradient(135deg,#6a4c93,#4a2c73)"><i class="fas fa-biohazard"></i></div>
+            <span class="contact-name">Poison Control</span>
+            <span class="contact-number">1800-222</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Emergency Guides Accordion -->
+    <section class="guides-section section-pad" aria-labelledby="guides-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">First Response</span>
+          <h2 id="guides-heading">Emergency Guides</h2>
+          <p>Step-by-step instructions for the most critical emergencies.</p>
+        </div>
+        <div class="accordion" role="list">
+
+          <!-- Heart Attack -->
+          <div class="accordion-item" id="heart-attack" role="listitem">
+            <button class="accordion-trigger" aria-expanded="true" aria-controls="acc-heart">
+              <div class="acc-icon" style="background:linear-gradient(135deg,#e63946,#c1121f)"><i class="fas fa-heartbeat"></i></div>
+              <h3>Heart Attack</h3>
+              <i class="fas fa-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-body" id="acc-heart">
+              <div class="guide-steps">
+                <div class="guide-step"><span class="step-num">1</span><p>Call emergency services (102) immediately — do not wait.</p></div>
+                <div class="guide-step"><span class="step-num">2</span><p>Have the person sit or lie down in a comfortable position.</p></div>
+                <div class="guide-step"><span class="step-num">3</span><p>Loosen tight clothing around the neck and chest.</p></div>
+                <div class="guide-step"><span class="step-num">4</span><p>If prescribed, help them take nitroglycerin.</p></div>
+                <div class="guide-step"><span class="step-num">5</span><p>Give aspirin (325mg) to chew if not allergic.</p></div>
+                <div class="guide-step"><span class="step-num">6</span><p>Begin CPR if the person becomes unresponsive and stops breathing.</p></div>
+              </div>
+              <div class="guide-img">
+                <img src="https://www.shutterstock.com/image-photo/heart-attack-man-clutching-his-260nw-2152528919.jpg" alt="Heart attack first aid illustration" loading="lazy">
+              </div>
+            </div>
+          </div>
+
+          <!-- Stroke -->
+          <div class="accordion-item" id="stroke" role="listitem">
+            <button class="accordion-trigger" aria-expanded="false" aria-controls="acc-stroke">
+              <div class="acc-icon" style="background:linear-gradient(135deg,#457b9d,#1d6a8a)"><i class="fas fa-brain"></i></div>
+              <h3>Stroke — FAST Method</h3>
+              <i class="fas fa-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-body" id="acc-stroke" style="display:none">
+              <div class="guide-steps">
+                <div class="guide-step"><span class="step-fast">F</span><p><strong>Face</strong> — Ask to smile. Does one side droop?</p></div>
+                <div class="guide-step"><span class="step-fast">A</span><p><strong>Arms</strong> — Ask to raise both arms. Does one drift down?</p></div>
+                <div class="guide-step"><span class="step-fast">S</span><p><strong>Speech</strong> — Ask to repeat a phrase. Is speech slurred or strange?</p></div>
+                <div class="guide-step"><span class="step-fast">T</span><p><strong>Time</strong> — If ANY of these, call 102 immediately. Note the time symptoms started.</p></div>
+                <div class="guide-step"><span class="step-num">!</span><p>Do NOT give food, water, or medication. Keep them calm and still.</p></div>
+              </div>
+              <div class="guide-img">
+                <img src="https://thumbs.dreamstime.com/b/breathless-woman-sidewalk-21173498.jpg" alt="Stroke first aid" loading="lazy">
+              </div>
+            </div>
+          </div>
+
+          <!-- Choking -->
+          <div class="accordion-item" id="choking" role="listitem">
+            <button class="accordion-trigger" aria-expanded="false" aria-controls="acc-choking">
+              <div class="acc-icon" style="background:linear-gradient(135deg,#f4a261,#c47a2a)"><i class="fas fa-lungs"></i></div>
+              <h3>Choking — Heimlich Maneuver</h3>
+              <i class="fas fa-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-body" id="acc-choking" style="display:none">
+              <div class="guide-steps">
+                <div class="guide-step"><span class="step-num">1</span><p>Ask "Are you choking?" — if they cannot speak or cough, act immediately.</p></div>
+                <div class="guide-step"><span class="step-num">2</span><p>Stand behind the person and wrap your arms around their waist.</p></div>
+                <div class="guide-step"><span class="step-num">3</span><p>Make a fist and place it just above the navel, below the breastbone.</p></div>
+                <div class="guide-step"><span class="step-num">4</span><p>Grasp your fist with the other hand and give quick upward thrusts.</p></div>
+                <div class="guide-step"><span class="step-num">5</span><p>Repeat until the object is expelled or the person loses consciousness.</p></div>
+                <div class="guide-step"><span class="step-num">6</span><p>If unconscious, begin CPR and call 102.</p></div>
+              </div>
+              <div class="guide-img">
+                <img src="https://media.istockphoto.com/id/1395004596/photo/stressed-woman-having-problems-to-breath-in-a-park.jpg?s=612x612&w=0&k=20&c=N6C2MyWjTV8ZnAkrkz66B61T_cAv4vkr5yePyCdYMqk=" alt="Choking first aid" loading="lazy">
+              </div>
+            </div>
+          </div>
+
+          <!-- Bleeding -->
+          <div class="accordion-item" id="bleeding" role="listitem">
+            <button class="accordion-trigger" aria-expanded="false" aria-controls="acc-bleeding">
+              <div class="acc-icon" style="background:linear-gradient(135deg,#e63946,#f4a261)"><i class="fas fa-droplet"></i></div>
+              <h3>Severe Bleeding</h3>
+              <i class="fas fa-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-body" id="acc-bleeding" style="display:none">
+              <div class="guide-steps">
+                <div class="guide-step"><span class="step-num">1</span><p>Call emergency services immediately.</p></div>
+                <div class="guide-step"><span class="step-num">2</span><p>Wear gloves if available. Remove clothing to expose the wound.</p></div>
+                <div class="guide-step"><span class="step-num">3</span><p>Apply firm, direct pressure with a clean cloth or bandage.</p></div>
+                <div class="guide-step"><span class="step-num">4</span><p>If blood soaks through, add more cloth on top — do NOT remove the first layer.</p></div>
+                <div class="guide-step"><span class="step-num">5</span><p>Elevate the injured area above heart level if possible.</p></div>
+                <div class="guide-step"><span class="step-num">6</span><p>Keep the person warm and calm until help arrives.</p></div>
+              </div>
+              <div class="guide-img">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP4SULT9Xol2-UL3W2NdmKpratbZRNj4vXSA&s" alt="Bleeding first aid" loading="lazy">
+              </div>
+            </div>
+          </div>
+
+          <!-- Burns -->
+          <div class="accordion-item" id="burn" role="listitem">
+            <button class="accordion-trigger" aria-expanded="false" aria-controls="acc-burn">
+              <div class="acc-icon" style="background:linear-gradient(135deg,#f4a261,#e63946)"><i class="fas fa-fire"></i></div>
+              <h3>Burns</h3>
+              <i class="fas fa-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-body" id="acc-burn" style="display:none">
+              <div class="guide-steps">
+                <div class="guide-step"><span class="step-num">1</span><p>Remove the person from the source of heat immediately.</p></div>
+                <div class="guide-step"><span class="step-num">2</span><p>Cool the burn with cool (not cold) running water for 10–20 minutes.</p></div>
+                <div class="guide-step"><span class="step-num">3</span><p>Remove jewelry or tight items near the burn before swelling starts.</p></div>
+                <div class="guide-step"><span class="step-num">4</span><p>Do NOT apply butter, toothpaste, or ice — these worsen burns.</p></div>
+                <div class="guide-step"><span class="step-num">5</span><p>Cover loosely with a sterile, non-stick dressing or clean cloth.</p></div>
+                <div class="guide-step"><span class="step-num">6</span><p>Seek medical help for burns larger than 3 inches or on face/hands/joints.</p></div>
+              </div>
+              <div class="guide-img">
+                <img src="https://media.istockphoto.com/id/157602937/nl/foto/doctor-nurse-treating-mans-wound-burn-emergency-room-hospital.jpg?s=612x612&w=0&k=20&c=Lls_MF4XRp-GFUC1O2oXzkaopKZk47_YuTNvd8_7tJE=" alt="Burn treatment" loading="lazy">
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Nearby Help -->
+    <section class="nearby-section section-pad" aria-labelledby="nearby-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">Find Help</span>
+          <h2 id="nearby-heading">Nearby Assistance</h2>
+        </div>
+        <div class="nearby-grid">
+          <div class="nearby-card">
+            <i class="fas fa-hospital"></i>
+            <h3>Nearest Hospitals</h3>
+            <p>Find hospitals with shortest wait times and real-time bed availability.</p>
+            <a href="hospitals.html" class="btn btn-secondary">Find Now</a>
+          </div>
+          <div class="nearby-card">
+            <i class="fas fa-user-doctor"></i>
+            <h3>Video Consultation</h3>
+            <p>Connect instantly with a licensed doctor via encrypted video call.</p>
+            <a href="video.html" class="btn btn-secondary">Start Call</a>
+          </div>
+          <div class="nearby-card">
+            <i class="fas fa-robot"></i>
+            <h3>AI Symptom Checker</h3>
+            <p>Describe your symptoms and get instant AI-powered medical guidance.</p>
+            <a href="assistant.html" class="btn btn-secondary">Ask AI</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="../index.html" class="footer-logo"><div class="logo-icon"><i class="fas fa-heartbeat"></i></div><span class="logo-text">HealthGuardian</span></a>
+          <p>Your trusted AI-powered emergency healthcare companion.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="footer-col"><h4>Features</h4><ul>
+          <li><a href="emergency.html"><i class="fas fa-chevron-right"></i> Emergency SOS</a></li>
+          <li><a href="hospitals.html"><i class="fas fa-chevron-right"></i> Find Hospitals</a></li>
+          <li><a href="assistant.html"><i class="fas fa-chevron-right"></i> AI Assistant</a></li>
+          <li><a href="bloodbank.html"><i class="fas fa-chevron-right"></i> Blood Banks</a></li>
+        </ul></div>
+        <div class="footer-col"><h4>Contact</h4><ul>
+          <li><a href="tel:102"><i class="fas fa-phone"></i> Ambulance: 102</a></li>
+          <li><a href="tel:18004357"><i class="fas fa-headset"></i> 1-800-HELP</a></li>
+          <li><a href="mailto:help@healthguardian.com"><i class="fas fa-envelope"></i> help@healthguardian.com</a></li>
+        </ul></div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 HealthGuardian. All rights reserved.</p>
+        <div class="footer-bottom-links"><a href="#">Privacy</a><a href="#">Terms</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/emergency/emergency.js"></script>
+</body>
+</html>

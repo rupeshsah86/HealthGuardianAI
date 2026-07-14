@@ -1,0 +1,30 @@
+/**
+ * main.css — Master CSS Entry Point
+ * Emergency Healthcare AI Platform
+ * ──────────────────────────────────
+ * Import order matters: variables → reset → base → layouts → components → utilities → themes
+ */
+
+/* 1. Design Tokens */
+@import url('base/variables.css');
+
+/* 2. Reset & Base */
+@import url('base/reset.css');
+
+/* 3. Layouts */
+@import url('layouts/footer.css');
+
+/* 4. Components */
+@import url('components/navbar.css');
+@import url('components/buttons.css');
+@import url('components/cards.css');
+@import url('components/forms.css');
+
+/* 5. Utilities */
+@import url('utilities/helpers.css');
+
+/* 6. Page Styles (imported per-page via <link>, listed here for reference) */
+/* pages/home.css | pages/emergency.css | pages/finder.css | pages/assistant.css | pages/video.css */
+
+/* ── Google Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap');

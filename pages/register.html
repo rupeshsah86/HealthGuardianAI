@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create your HealthGuardian account — Emergency Healthcare AI Platform">
+  <title>Register — HealthGuardian</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+
+  <div class="auth-page">
+    <div class="auth-card">
+      <a href="../index.html" class="auth-logo" aria-label="HealthGuardian Home">
+        <div class="logo-icon" aria-hidden="true"><i class="fas fa-heartbeat"></i></div>
+        <span class="logo-text">HealthGuardian</span>
+      </a>
+
+      <h2>Create Account</h2>
+      <p class="auth-subtitle">Join thousands protected by HealthGuardian</p>
+
+      <form id="registerForm" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="registerName">Full Name <span class="required">*</span></label>
+          <div class="input-wrapper">
+            <i class="fas fa-user input-icon" aria-hidden="true"></i>
+            <input
+              type="text"
+              id="registerName"
+              class="form-control"
+              placeholder="Your full name"
+              autocomplete="name"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="registerEmail">Email Address <span class="required">*</span></label>
+          <div class="input-wrapper">
+            <i class="fas fa-envelope input-icon" aria-hidden="true"></i>
+            <input
+              type="email"
+              id="registerEmail"
+              class="form-control"
+              placeholder="you@example.com"
+              autocomplete="email"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="registerPassword">Password <span class="required">*</span></label>
+          <div class="input-wrapper">
+            <i class="fas fa-lock input-icon" aria-hidden="true"></i>
+            <input
+              type="password"
+              id="registerPassword"
+              class="form-control"
+              placeholder="Min 8 chars, 1 uppercase, 1 number"
+              autocomplete="new-password"
+              required
+            >
+            <i class="fas fa-eye toggle-password" role="button" tabindex="0" aria-label="Toggle password visibility"></i>
+          </div>
+          <span class="form-hint">Minimum 8 characters with at least one uppercase letter and number.</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="registerSubmit">
+          <i class="fas fa-user-plus" aria-hidden="true"></i>
+          <span>Create Account</span>
+        </button>
+      </form>
+
+      <p class="auth-footer">
+        Already have an account? <a href="login.html">Sign in</a>
+      </p>
+    </div>
+  </div>
+
+  <script type="module">
+    import { bindRegisterForm, bindPasswordToggles } from '../js/auth/auth.js';
+    document.addEventListener('DOMContentLoaded', () => {
+      bindRegisterForm();
+      bindPasswordToggles();
+    });
+  </script>
+</body>
+</html>

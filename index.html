@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="HealthGuardian — AI-powered emergency healthcare platform. Instant SOS, hospital finder, blood bank locator, AI symptom checker, and video consultations.">
+  <meta name="theme-color" content="#e63946">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="HealthGuardian — Emergency Healthcare AI">
+  <meta property="og:description" content="AI-powered emergency healthcare when seconds matter.">
+  <meta property="og:type" content="website">
+
+  <title>HealthGuardian — Emergency Healthcare AI Platform</title>
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/pages/home.css">
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════════ -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="index.html" class="nav-logo" aria-label="HealthGuardian Home">
+        <div class="logo-icon" aria-hidden="true"><i class="fas fa-heartbeat"></i></div>
+        <span class="logo-text">Health<span>Guardian</span></span>
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="index.html" class="nav-link active"><i class="fas fa-house" aria-hidden="true"></i> Home</a></li>
+        <li><a href="pages/emergency.html" class="nav-link"><i class="fas fa-bell" aria-hidden="true"></i> Emergency</a></li>
+        <li><a href="pages/hospitals.html" class="nav-link"><i class="fas fa-hospital" aria-hidden="true"></i> Hospitals</a></li>
+        <li><a href="pages/assistant.html" class="nav-link"><i class="fas fa-robot" aria-hidden="true"></i> AI Assistant</a></li>
+        <li><a href="pages/video.html" class="nav-link"><i class="fas fa-video" aria-hidden="true"></i> Consult</a></li>
+        <li><a href="pages/bloodbank.html" class="nav-link"><i class="fas fa-droplet" aria-hidden="true"></i> Blood Banks</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </button>
+
+        <!-- Logged-out state -->
+        <a href="pages/login.html" class="btn btn-primary btn-sm nav-login-btn">
+          <i class="fas fa-right-to-bracket" aria-hidden="true"></i> Login
+        </a>
+
+        <!-- Logged-in state (hidden by default, shown by JS) -->
+        <div class="profile-dropdown hidden" aria-haspopup="true">
+          <button class="profile-trigger" aria-label="Open profile menu">
+            <div class="profile-avatar" aria-hidden="true"></div>
+            <span class="profile-name">User</span>
+            <i class="fas fa-chevron-down profile-chevron" aria-hidden="true"></i>
+          </button>
+          <div class="dropdown-menu" role="menu">
+            <button class="dropdown-item logout-btn danger" role="menuitem">
+              <i class="fas fa-right-from-bracket" aria-hidden="true"></i> Logout
+            </button>
+          </div>
+        </div>
+
+        <button class="hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content">
+
+    <!-- ══════════════════════════════════════════
+         HERO
+    ══════════════════════════════════════════ -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="hero-blob hero-blob-1"></div>
+        <div class="hero-blob hero-blob-2"></div>
+      </div>
+      <div class="container">
+        <div class="hero-content animate-fade-up">
+          <div class="hero-eyebrow">
+            <span class="badge badge-primary"><i class="fas fa-shield-heart"></i> AI-Powered Healthcare</span>
+          </div>
+          <h1 id="hero-heading">Emergency Care,<br><span class="text-gradient">When It Matters Most</span></h1>
+          <p class="hero-desc">Instant access to emergency services, AI symptom analysis, hospital finder, and video consultations — all in one platform.</p>
+          <div class="hero-actions">
+            <a href="pages/emergency.html" class="btn btn-primary btn-lg">
+              <i class="fas fa-bell" aria-hidden="true"></i> Emergency SOS
+            </a>
+            <a href="pages/assistant.html" class="btn btn-ghost btn-lg">
+              <i class="fas fa-robot" aria-hidden="true"></i> AI Assistant
+            </a>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <span class="stat-num">5+</span>
+              <span class="stat-label">Hospitals Nearby</span>
+            </div>
+            <div class="hero-stat-divider" aria-hidden="true"></div>
+            <div class="hero-stat">
+              <span class="stat-num">24/7</span>
+              <span class="stat-label">AI Support</span>
+            </div>
+            <div class="hero-stat-divider" aria-hidden="true"></div>
+            <div class="hero-stat">
+              <span class="stat-num">&lt;2min</span>
+              <span class="stat-label">SOS Response</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visual animate-float" aria-hidden="true">
+          <div class="hero-card-mockup">
+            <div class="mockup-header">
+              <div class="mockup-dot red"></div>
+              <div class="mockup-dot yellow"></div>
+              <div class="mockup-dot green"></div>
+            </div>
+            <div class="mockup-sos">
+              <div class="mockup-sos-btn">
+                <i class="fas fa-bell"></i>
+                <span>SOS</span>
+              </div>
+              <p>Help is on the way</p>
+              <span class="badge badge-success"><i class="fas fa-circle-check"></i> ETA: 7 min</span>
+            </div>
+            <div class="mockup-info">
+              <div class="mockup-info-item">
+                <i class="fas fa-hospital"></i>
+                <span>PSG Hospital — 1.2 km</span>
+              </div>
+              <div class="mockup-info-item">
+                <i class="fas fa-clock"></i>
+                <span>Wait time: 20 min</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         FEATURES
+    ══════════════════════════════════════════ -->
+    <section class="features section-pad" aria-labelledby="features-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">What We Offer</span>
+          <h2 id="features-heading">Everything You Need in an Emergency</h2>
+          <p>A complete healthcare companion designed for critical moments.</p>
+        </div>
+        <div class="features-grid">
+          <article class="feature-card" style="--delay:0s">
+            <div class="feature-icon" style="background:linear-gradient(135deg,#e63946,#c1121f)">
+              <i class="fas fa-ambulance" aria-hidden="true"></i>
+            </div>
+            <h3>Emergency SOS</h3>
+            <p>One-tap alert to nearby emergency services with automatic location sharing.</p>
+            <a href="pages/emergency.html" class="feature-link">Activate SOS <i class="fas fa-arrow-right"></i></a>
+          </article>
+          <article class="feature-card" style="--delay:0.1s">
+            <div class="feature-icon" style="background:linear-gradient(135deg,#457b9d,#1d6a8a)">
+              <i class="fas fa-hospital-alt" aria-hidden="true"></i>
+            </div>
+            <h3>Smart Hospital Finder</h3>
+            <p>Real-time hospital availability, wait times, and turn-by-turn directions.</p>
+            <a href="pages/hospitals.html" class="feature-link">Find Hospitals <i class="fas fa-arrow-right"></i></a>
+          </article>
+          <article class="feature-card" style="--delay:0.2s">
+            <div class="feature-icon" style="background:linear-gradient(135deg,#6a4c93,#4a2c73)">
+              <i class="fas fa-robot" aria-hidden="true"></i>
+            </div>
+            <h3>AI Health Assistant</h3>
+            <p>Instant symptom analysis, first-aid guidance, and medical recommendations.</p>
+            <a href="pages/assistant.html" class="feature-link">Ask AI <i class="fas fa-arrow-right"></i></a>
+          </article>
+          <article class="feature-card" style="--delay:0.3s">
+            <div class="feature-icon" style="background:linear-gradient(135deg,#06d6a0,#04a87d)">
+              <i class="fas fa-video" aria-hidden="true"></i>
+            </div>
+            <h3>Video Consultation</h3>
+            <p>Connect with healthcare professionals via encrypted video calls instantly.</p>
+            <a href="pages/video.html" class="feature-link">Start Call <i class="fas fa-arrow-right"></i></a>
+          </article>
+          <article class="feature-card" style="--delay:0.4s">
+            <div class="feature-icon" style="background:linear-gradient(135deg,#e63946,#f4a261)">
+              <i class="fas fa-droplet" aria-hidden="true"></i>
+            </div>
+            <h3>Blood Bank Finder</h3>
+            <p>Locate nearby blood banks with live blood type availability status.</p>
+            <a href="pages/bloodbank.html" class="feature-link">Find Blood <i class="fas fa-arrow-right"></i></a>
+          </article>
+          <article class="feature-card" style="--delay:0.5s">
+            <div class="feature-icon" style="background:linear-gradient(135deg,#f4a261,#c47a2a)">
+              <i class="fas fa-kit-medical" aria-hidden="true"></i>
+            </div>
+            <h3>First Aid Guides</h3>
+            <p>Step-by-step offline-ready guides for CPR, choking, burns, and more.</p>
+            <a href="pages/assistant.html#first-aid" class="feature-link">View Guides <i class="fas fa-arrow-right"></i></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         QUICK ACCESS
+    ══════════════════════════════════════════ -->
+    <section class="quick-access section-pad" aria-labelledby="quick-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">Quick Access</span>
+          <h2 id="quick-heading">Common Emergencies</h2>
+          <p>Tap any card for instant step-by-step guidance.</p>
+        </div>
+        <div class="quick-grid">
+          <a href="pages/emergency.html#heart-attack" class="quick-card" aria-label="Heart Attack guide">
+            <i class="fas fa-heartbeat" aria-hidden="true"></i>
+            <span>Heart Attack</span>
+          </a>
+          <a href="pages/emergency.html#stroke" class="quick-card" aria-label="Stroke guide">
+            <i class="fas fa-brain" aria-hidden="true"></i>
+            <span>Stroke</span>
+          </a>
+          <a href="pages/emergency.html#choking" class="quick-card" aria-label="Choking guide">
+            <i class="fas fa-lungs" aria-hidden="true"></i>
+            <span>Choking</span>
+          </a>
+          <a href="pages/emergency.html#bleeding" class="quick-card" aria-label="Severe Bleeding guide">
+            <i class="fas fa-droplet" aria-hidden="true"></i>
+            <span>Bleeding</span>
+          </a>
+          <a href="pages/emergency.html#burn" class="quick-card" aria-label="Burns guide">
+            <i class="fas fa-fire" aria-hidden="true"></i>
+            <span>Burns</span>
+          </a>
+          <a href="pages/emergency.html#allergy" class="quick-card" aria-label="Allergic Reaction guide">
+            <i class="fas fa-allergies" aria-hidden="true"></i>
+            <span>Allergy</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         TESTIMONIALS
+    ══════════════════════════════════════════ -->
+    <section class="testimonials section-pad" aria-labelledby="testimonials-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">Real Stories</span>
+          <h2 id="testimonials-heading">Lives Saved with HealthGuardian</h2>
+        </div>
+        <div class="testimonial-track" role="list">
+          <div class="testimonial-card" role="listitem">
+            <div class="testimonial-quote" aria-hidden="true"><i class="fas fa-quote-left"></i></div>
+            <p>"HealthGuardian helped me get to the nearest hospital during my heart attack. The quick response saved my life!"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" aria-hidden="true">R</div>
+              <div>
+                <strong>Robert Johnson</strong>
+                <span>New York, USA</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card" role="listitem">
+            <div class="testimonial-quote" aria-hidden="true"><i class="fas fa-quote-left"></i></div>
+            <p>"The AI assistant guided me through CPR when my husband collapsed. I didn't panic because I had step-by-step instructions."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" aria-hidden="true">S</div>
+              <div>
+                <strong>Sarah Miller</strong>
+                <span>Chicago, USA</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card" role="listitem">
+            <div class="testimonial-quote" aria-hidden="true"><i class="fas fa-quote-left"></i></div>
+            <p>"Found a blood bank with O- in under 2 minutes during my father's surgery. This app is a lifesaver."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" aria-hidden="true">A</div>
+              <div>
+                <strong>Arjun Sharma</strong>
+                <span>Coimbatore, India</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         CTA
+    ══════════════════════════════════════════ -->
+    <section class="cta-section section-pad" aria-labelledby="cta-heading">
+      <div class="container">
+        <div class="cta-card">
+          <div class="cta-content">
+            <h2 id="cta-heading">Ready to Protect Your Health?</h2>
+            <p>Join thousands of users who trust HealthGuardian for emergency healthcare.</p>
+            <div class="cta-actions">
+              <a href="pages/register.html" class="btn btn-primary btn-lg">
+                <i class="fas fa-user-plus" aria-hidden="true"></i> Get Started Free
+              </a>
+              <a href="pages/emergency.html" class="btn btn-outline btn-lg">
+                <i class="fas fa-bell" aria-hidden="true"></i> Try Emergency SOS
+              </a>
+            </div>
+          </div>
+          <div class="cta-visual" aria-hidden="true">
+            <i class="fas fa-shield-heart"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo" aria-label="HealthGuardian Home">
+            <div class="logo-icon" aria-hidden="true"><i class="fas fa-heartbeat"></i></div>
+            <span class="logo-text">HealthGuardian</span>
+          </a>
+          <p>Your trusted AI-powered emergency healthcare companion, connecting you with medical help when seconds matter.</p>
+          <div class="footer-social" aria-label="Social media links">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Features</h4>
+          <ul>
+            <li><a href="pages/emergency.html"><i class="fas fa-chevron-right"></i> Emergency SOS</a></li>
+            <li><a href="pages/hospitals.html"><i class="fas fa-chevron-right"></i> Find Hospitals</a></li>
+            <li><a href="pages/assistant.html"><i class="fas fa-chevron-right"></i> AI Assistant</a></li>
+            <li><a href="pages/video.html"><i class="fas fa-chevron-right"></i> Video Consult</a></li>
+            <li><a href="pages/bloodbank.html"><i class="fas fa-chevron-right"></i> Blood Banks</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="pages/assistant.html#first-aid"><i class="fas fa-chevron-right"></i> First Aid Guides</a></li>
+            <li><a href="pages/emergency.html"><i class="fas fa-chevron-right"></i> Emergency Guides</a></li>
+            <li><a href="pages/register.html"><i class="fas fa-chevron-right"></i> Create Account</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:+9779829275143"><i class="fas fa-phone"></i> +977-9829275143</a></li>
+            <li><a href="tel:18004357"><i class="fas fa-headset"></i> 1-800-HELP</a></li>
+            <li><a href="mailto:help@healthguardian.com"><i class="fas fa-envelope"></i> help@healthguardian.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 HealthGuardian. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

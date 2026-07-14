@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Find nearby blood banks with real-time blood type availability — HealthGuardian">
+  <title>Blood Banks — HealthGuardian</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/pages/finder.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="../index.html" class="nav-logo">
+        <div class="logo-icon"><i class="fas fa-heartbeat"></i></div>
+        <span class="logo-text">Health<span>Guardian</span></span>
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="../index.html" class="nav-link"><i class="fas fa-house"></i> Home</a></li>
+        <li><a href="emergency.html" class="nav-link"><i class="fas fa-bell"></i> Emergency</a></li>
+        <li><a href="hospitals.html" class="nav-link"><i class="fas fa-hospital"></i> Hospitals</a></li>
+        <li><a href="assistant.html" class="nav-link"><i class="fas fa-robot"></i> AI Assistant</a></li>
+        <li><a href="video.html" class="nav-link"><i class="fas fa-video"></i> Consult</a></li>
+        <li><a href="bloodbank.html" class="nav-link active"><i class="fas fa-droplet"></i> Blood Banks</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode"><i class="fas fa-moon"></i></button>
+        <a href="login.html" class="btn btn-primary btn-sm nav-login-btn"><i class="fas fa-right-to-bracket"></i> Login</a>
+        <div class="profile-dropdown hidden">
+          <button class="profile-trigger">
+            <div class="profile-avatar"></div>
+            <span class="profile-name">User</span>
+            <i class="fas fa-chevron-down profile-chevron"></i>
+          </button>
+          <div class="dropdown-menu">
+            <button class="dropdown-item logout-btn danger"><i class="fas fa-right-from-bracket"></i> Logout</button>
+          </div>
+        </div>
+        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="container">
+        <div class="page-header-text">
+          <span class="eyebrow"><i class="fas fa-droplet"></i> Blood Bank Finder</span>
+          <h1>Find Blood Banks</h1>
+          <p>Locate nearby blood banks with live blood type availability.</p>
+        </div>
+        <a href="tel:104" class="btn btn-primary">
+          <i class="fas fa-phone"></i> Blood Helpline: 104
+        </a>
+      </div>
+    </div>
+
+    <!-- Search & Filter Bar -->
+    <div class="search-filter-bar" role="search">
+      <div class="container">
+        <div class="search-box">
+          <i class="fas fa-map-marker-alt"></i>
+          <input type="text" id="locationInput" placeholder="Enter location or use current location" aria-label="Search location">
+          <button class="search-action" id="currentLocationBtn" aria-label="Use current location">
+            <i class="fas fa-location-crosshairs"></i>
+          </button>
+        </div>
+        <select class="form-control" id="bloodTypeFilter" aria-label="Filter by blood type">
+          <option value="">All Blood Types</option>
+          <option value="A+">A+</option>
+          <option value="A-">A-</option>
+          <option value="B+">B+</option>
+          <option value="B-">B-</option>
+          <option value="AB+">AB+</option>
+          <option value="AB-">AB-</option>
+          <option value="O+">O+</option>
+          <option value="O-">O-</option>
+        </select>
+        <select class="form-control" id="distanceFilter" aria-label="Filter by distance">
+          <option value="5">Within 5 km</option>
+          <option value="10" selected>Within 10 km</option>
+          <option value="20">Within 20 km</option>
+          <option value="50">Within 50 km</option>
+        </select>
+        <button class="btn btn-primary" id="searchBtn">
+          <i class="fas fa-magnifying-glass"></i> Search
+        </button>
+      </div>
+    </div>
+
+    <!-- Blood Availability Overview -->
+    <div class="blood-availability">
+      <div class="container">
+        <h3>Blood Availability Overview</h3>
+        <div class="blood-types-grid" id="bloodTypesGrid" aria-label="Blood type availability">
+          <!-- Injected by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Finder Layout -->
+    <div class="finder-layout">
+      <div class="map-panel">
+        <div id="bloodbank-map" role="application" aria-label="Blood bank locations map"></div>
+      </div>
+      <div class="list-panel">
+        <div class="list-panel-header">
+          <span class="result-count" id="resultCount">Loading...</span>
+          <div class="sort-tabs" role="tablist" aria-label="Sort blood banks">
+            <button class="sort-tab active" data-sort="distance" role="tab">Distance</button>
+            <button class="sort-tab" data-sort="availability" role="tab">Availability</button>
+            <button class="sort-tab" data-sort="rating" role="tab">Rating</button>
+          </div>
+        </div>
+        <div class="list-items" id="bloodbankList" aria-live="polite" aria-label="Blood bank results">
+          <!-- Injected by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Emergency Banner -->
+    <div class="emergency-banner">
+      <div class="container">
+        <div class="banner-icon"><i class="fas fa-droplet"></i></div>
+        <div>
+          <h3>Need Blood Urgently?</h3>
+          <p>Call the national blood helpline for immediate assistance.</p>
+        </div>
+        <div class="banner-actions">
+          <a href="tel:104" class="btn btn-white btn-lg"><i class="fas fa-phone"></i> Call 104</a>
+          <a href="emergency.html" class="btn btn-outline-white btn-lg"><i class="fas fa-bell"></i> Emergency SOS</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Blood Request Modal -->
+  <div class="modal-overlay" id="requestModal" role="dialog" aria-modal="true" aria-labelledby="requestModalTitle">
+    <div class="modal-box" style="max-width:480px">
+      <div class="modal-header">
+        <h2 id="requestModalTitle">Request Blood</h2>
+        <button class="modal-close" id="closeRequestModal" aria-label="Close modal"><i class="fas fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <form id="bloodRequestForm" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="patientName">Patient Name <span class="required">*</span></label>
+            <input type="text" id="patientName" class="form-control" placeholder="Full name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="requestBloodType">Blood Type Needed <span class="required">*</span></label>
+            <select id="requestBloodType" class="form-control" required>
+              <option value="">Select blood type</option>
+              <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+              <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="unitsNeeded">Units Needed <span class="required">*</span></label>
+            <input type="number" id="unitsNeeded" class="form-control" min="1" value="1" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="urgencyLevel">Urgency <span class="required">*</span></label>
+            <select id="urgencyLevel" class="form-control" required>
+              <option value="normal">Normal (within 24 hours)</option>
+              <option value="urgent">Urgent (within 6 hours)</option>
+              <option value="emergency">Emergency (immediately)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="contactNumber">Contact Number <span class="required">*</span></label>
+            <input type="tel" id="contactNumber" class="form-control" placeholder="+91 XXXXX XXXXX" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block btn-lg">
+            <i class="fas fa-paper-plane"></i> Submit Request
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="../index.html" class="footer-logo"><div class="logo-icon"><i class="fas fa-heartbeat"></i></div><span class="logo-text">HealthGuardian</span></a>
+          <p>Your trusted AI-powered emergency healthcare companion.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="footer-col"><h4>Features</h4><ul>
+          <li><a href="emergency.html"><i class="fas fa-chevron-right"></i> Emergency SOS</a></li>
+          <li><a href="hospitals.html"><i class="fas fa-chevron-right"></i> Find Hospitals</a></li>
+          <li><a href="assistant.html"><i class="fas fa-chevron-right"></i> AI Assistant</a></li>
+          <li><a href="bloodbank.html"><i class="fas fa-chevron-right"></i> Blood Banks</a></li>
+        </ul></div>
+        <div class="footer-col"><h4>Contact</h4><ul>
+          <li><a href="tel:104"><i class="fas fa-phone"></i> Blood Helpline: 104</a></li>
+          <li><a href="tel:18004357"><i class="fas fa-headset"></i> 1-800-HELP</a></li>
+          <li><a href="mailto:help@healthguardian.com"><i class="fas fa-envelope"></i> help@healthguardian.com</a></li>
+        </ul></div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 HealthGuardian. All rights reserved.</p>
+        <div class="footer-bottom-links"><a href="#">Privacy</a><a href="#">Terms</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/bloodbank/bloodbank.js"></script>
+</body>
+</html>

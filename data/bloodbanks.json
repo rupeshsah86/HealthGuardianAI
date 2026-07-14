@@ -1,0 +1,77 @@
+[
+  {
+    "id": 1,
+    "name": "PSG Blood Bank",
+    "address": "PSG Hospitals, Peelamedu, Coimbatore - 641004",
+    "rating": 4.8,
+    "phone": "+91 422 2570170",
+    "lat": 11.0186,
+    "lng": 77.0199,
+    "bloodTypes": {
+      "A+": "available", "A-": "limited",
+      "B+": "available", "B-": "critical",
+      "AB+": "available", "AB-": "limited",
+      "O+": "critical",  "O-": "limited"
+    }
+  },
+  {
+    "id": 2,
+    "name": "KMCH Blood Bank",
+    "address": "Kovai Medical Center, Avanashi Road, Coimbatore - 641014",
+    "rating": 4.7,
+    "phone": "+91 422 4323800",
+    "lat": 11.0274,
+    "lng": 77.0262,
+    "bloodTypes": {
+      "A+": "available", "A-": "critical",
+      "B+": "available", "B-": "limited",
+      "AB+": "limited",  "AB-": "critical",
+      "O+": "critical",  "O-": "critical"
+    }
+  },
+  {
+    "id": 3,
+    "name": "Government Blood Bank",
+    "address": "Coimbatore Medical College, Coimbatore - 641018",
+    "rating": 4.3,
+    "phone": "+91 422 2245000",
+    "lat": 11.0025,
+    "lng": 77.0089,
+    "bloodTypes": {
+      "A+": "limited",  "A-": "limited",
+      "B+": "available","B-": "limited",
+      "AB+": "critical","AB-": "critical",
+      "O+": "available","O-": "limited"
+    }
+  },
+  {
+    "id": 4,
+    "name": "Rotary Blood Bank",
+    "address": "RS Puram, Coimbatore - 641002",
+    "rating": 4.6,
+    "phone": "+91 422 2388888",
+    "lat": 11.0039,
+    "lng": 76.9618,
+    "bloodTypes": {
+      "A+": "available","A-": "available",
+      "B+": "available","B-": "limited",
+      "AB+": "available","AB-": "limited",
+      "O+": "available","O-": "limited"
+    }
+  },
+  {
+    "id": 5,
+    "name": "Lions Blood Bank",
+    "address": "Gandhipuram, Coimbatore - 641012",
+    "rating": 4.5,
+    "phone": "+91 422 2498888",
+    "lat": 11.0356,
+    "lng": 77.0372,
+    "bloodTypes": {
+      "A+": "available","A-": "limited",
+      "B+": "critical", "B-": "critical",
+      "AB+": "limited", "AB-": "critical",
+      "O+": "available","O-": "critical"
+    }
+  }
+]

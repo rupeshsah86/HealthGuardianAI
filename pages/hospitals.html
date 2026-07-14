@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Find nearby hospitals with real-time wait times and directions — HealthGuardian">
+  <title>Find Hospitals — HealthGuardian</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/pages/finder.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="../index.html" class="nav-logo">
+        <div class="logo-icon"><i class="fas fa-heartbeat"></i></div>
+        <span class="logo-text">Health<span>Guardian</span></span>
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="../index.html" class="nav-link"><i class="fas fa-house"></i> Home</a></li>
+        <li><a href="emergency.html" class="nav-link"><i class="fas fa-bell"></i> Emergency</a></li>
+        <li><a href="hospitals.html" class="nav-link active"><i class="fas fa-hospital"></i> Hospitals</a></li>
+        <li><a href="assistant.html" class="nav-link"><i class="fas fa-robot"></i> AI Assistant</a></li>
+        <li><a href="video.html" class="nav-link"><i class="fas fa-video"></i> Consult</a></li>
+        <li><a href="bloodbank.html" class="nav-link"><i class="fas fa-droplet"></i> Blood Banks</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" aria-label="Toggle dark mode"><i class="fas fa-moon"></i></button>
+        <a href="login.html" class="btn btn-primary btn-sm nav-login-btn"><i class="fas fa-right-to-bracket"></i> Login</a>
+        <div class="profile-dropdown hidden">
+          <button class="profile-trigger">
+            <div class="profile-avatar"></div>
+            <span class="profile-name">User</span>
+            <i class="fas fa-chevron-down profile-chevron"></i>
+          </button>
+          <div class="dropdown-menu">
+            <button class="dropdown-item logout-btn danger"><i class="fas fa-right-from-bracket"></i> Logout</button>
+          </div>
+        </div>
+        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="container">
+        <div class="page-header-text">
+          <span class="eyebrow"><i class="fas fa-hospital"></i> Hospital Finder</span>
+          <h1>Find Nearby Hospitals</h1>
+          <p>Real-time availability, wait times, and directions.</p>
+        </div>
+        <a href="emergency.html" class="btn btn-primary">
+          <i class="fas fa-bell"></i> Emergency SOS
+        </a>
+      </div>
+    </div>
+
+    <!-- Search & Filter Bar -->
+    <div class="search-filter-bar" role="search">
+      <div class="container">
+        <div class="search-box">
+          <i class="fas fa-map-marker-alt"></i>
+          <input type="text" id="locationInput" placeholder="Enter location or use current location" aria-label="Search location">
+          <button class="search-action" id="currentLocationBtn" aria-label="Use current location">
+            <i class="fas fa-location-crosshairs"></i>
+          </button>
+        </div>
+        <select class="form-control" id="specialtyFilter" aria-label="Filter by specialty">
+          <option value="">All Specialties</option>
+          <option value="emergency">Emergency</option>
+          <option value="cardiology">Cardiology</option>
+          <option value="pediatrics">Pediatrics</option>
+          <option value="orthopedics">Orthopedics</option>
+          <option value="neurology">Neurology</option>
+          <option value="ophthalmology">Ophthalmology</option>
+        </select>
+        <select class="form-control" id="distanceFilter" aria-label="Filter by distance">
+          <option value="5">Within 5 km</option>
+          <option value="10" selected>Within 10 km</option>
+          <option value="20">Within 20 km</option>
+          <option value="50">Within 50 km</option>
+        </select>
+        <button class="btn btn-primary" id="searchBtn">
+          <i class="fas fa-magnifying-glass"></i> Search
+        </button>
+      </div>
+    </div>
+
+    <!-- Finder Layout -->
+    <div class="finder-layout">
+      <!-- Map -->
+      <div class="map-panel">
+        <div id="hospital-map" role="application" aria-label="Hospital locations map"></div>
+      </div>
+
+      <!-- List -->
+      <div class="list-panel">
+        <div class="list-panel-header">
+          <span class="result-count" id="resultCount">Loading...</span>
+          <div class="sort-tabs" role="tablist" aria-label="Sort hospitals">
+            <button class="sort-tab active" data-sort="distance" role="tab">Distance</button>
+            <button class="sort-tab" data-sort="wait-time" role="tab">Wait Time</button>
+            <button class="sort-tab" data-sort="rating" role="tab">Rating</button>
+          </div>
+        </div>
+        <div class="list-items" id="hospitalList" aria-live="polite" aria-label="Hospital results">
+          <!-- Injected by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Emergency Banner -->
+    <div class="emergency-banner">
+      <div class="container">
+        <div class="banner-icon"><i class="fas fa-truck-medical"></i></div>
+        <div>
+          <h3>Need Immediate Help?</h3>
+          <p>If this is life-threatening, call emergency services immediately.</p>
+        </div>
+        <div class="banner-actions">
+          <a href="tel:102" class="btn btn-white btn-lg"><i class="fas fa-phone"></i> Call 102</a>
+          <a href="emergency.html" class="btn btn-outline-white btn-lg"><i class="fas fa-bell"></i> Emergency SOS</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="../index.html" class="footer-logo"><div class="logo-icon"><i class="fas fa-heartbeat"></i></div><span class="logo-text">HealthGuardian</span></a>
+          <p>Your trusted AI-powered emergency healthcare companion.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="footer-col"><h4>Features</h4><ul>
+          <li><a href="emergency.html"><i class="fas fa-chevron-right"></i> Emergency SOS</a></li>
+          <li><a href="hospitals.html"><i class="fas fa-chevron-right"></i> Find Hospitals</a></li>
+          <li><a href="assistant.html"><i class="fas fa-chevron-right"></i> AI Assistant</a></li>
+          <li><a href="bloodbank.html"><i class="fas fa-chevron-right"></i> Blood Banks</a></li>
+        </ul></div>
+        <div class="footer-col"><h4>Contact</h4><ul>
+          <li><a href="tel:102"><i class="fas fa-phone"></i> Ambulance: 102</a></li>
+          <li><a href="tel:18004357"><i class="fas fa-headset"></i> 1-800-HELP</a></li>
+          <li><a href="mailto:help@healthguardian.com"><i class="fas fa-envelope"></i> help@healthguardian.com</a></li>
+        </ul></div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 HealthGuardian. All rights reserved.</p>
+        <div class="footer-bottom-links"><a href="#">Privacy</a><a href="#">Terms</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/hospitals/hospitals.js"></script>
+</body>
+</html>
