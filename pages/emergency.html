@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Emergency SOS, first aid guides, and emergency contacts — HealthGuardian">
   <title>Emergency — HealthGuardian</title>
+  <script>document.documentElement.setAttribute('data-theme',localStorage.getItem('hg_theme')||'light');</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
@@ -50,11 +51,9 @@
   <main>
     <!-- Page Header -->
     <div class="page-header">
-      <div class="container">
-        <span class="eyebrow"><i class="fas fa-bell"></i> Emergency Services</span>
-        <h1>Emergency Assistance</h1>
-        <p>Instant SOS, step-by-step guides, and emergency contacts at your fingertips.</p>
-      </div>
+      <span class="eyebrow"><i class="fas fa-bell"></i> Emergency Services</span>
+      <h1>Emergency Assistance</h1>
+      <p>Instant SOS, step-by-step guides, and emergency contacts at your fingertips.</p>
     </div>
 
     <!-- SOS Section -->
@@ -96,22 +95,22 @@
         </div>
         <div class="contacts-grid">
           <a href="tel:100" class="contact-card" aria-label="Call Police: 100">
-            <div class="contact-icon" style="background:linear-gradient(135deg,#3a56a8,#1e3a8a)"><i class="fas fa-shield-halved"></i></div>
+            <div class="contact-icon" style="background:linear-gradient(135deg,#1a6fc4,#1358a0)"><i class="fas fa-shield-halved"></i></div>
             <span class="contact-name">Police</span>
             <span class="contact-number">100</span>
           </a>
           <a href="tel:102" class="contact-card" aria-label="Call Ambulance: 102">
-            <div class="contact-icon" style="background:linear-gradient(135deg,#e63946,#c1121f)"><i class="fas fa-truck-medical"></i></div>
+            <div class="contact-icon" style="background:linear-gradient(135deg,#dc2626,#b91c1c)"><i class="fas fa-truck-medical"></i></div>
             <span class="contact-name">Ambulance</span>
             <span class="contact-number">102</span>
           </a>
           <a href="tel:101" class="contact-card" aria-label="Call Fire Department: 101">
-            <div class="contact-icon" style="background:linear-gradient(135deg,#f4a261,#c47a2a)"><i class="fas fa-fire-extinguisher"></i></div>
+            <div class="contact-icon" style="background:linear-gradient(135deg,#d97706,#b45309)"><i class="fas fa-fire-extinguisher"></i></div>
             <span class="contact-name">Fire Dept.</span>
             <span class="contact-number">101</span>
           </a>
           <a href="tel:1800222" class="contact-card" aria-label="Call Poison Control">
-            <div class="contact-icon" style="background:linear-gradient(135deg,#6a4c93,#4a2c73)"><i class="fas fa-biohazard"></i></div>
+            <div class="contact-icon" style="background:linear-gradient(135deg,#0d9488,#0a7a70)"><i class="fas fa-biohazard"></i></div>
             <span class="contact-name">Poison Control</span>
             <span class="contact-number">1800-222</span>
           </a>
@@ -132,7 +131,7 @@
           <!-- Heart Attack -->
           <div class="accordion-item" id="heart-attack" role="listitem">
             <button class="accordion-trigger" aria-expanded="true" aria-controls="acc-heart">
-              <div class="acc-icon" style="background:linear-gradient(135deg,#e63946,#c1121f)"><i class="fas fa-heartbeat"></i></div>
+              <div class="acc-icon" style="background:linear-gradient(135deg,#dc2626,#b91c1c)"><i class="fas fa-heartbeat"></i></div>
               <h3>Heart Attack</h3>
               <i class="fas fa-chevron-down acc-chevron"></i>
             </button>
@@ -154,7 +153,7 @@
           <!-- Stroke -->
           <div class="accordion-item" id="stroke" role="listitem">
             <button class="accordion-trigger" aria-expanded="false" aria-controls="acc-stroke">
-              <div class="acc-icon" style="background:linear-gradient(135deg,#457b9d,#1d6a8a)"><i class="fas fa-brain"></i></div>
+              <div class="acc-icon" style="background:linear-gradient(135deg,#1a6fc4,#1358a0)"><i class="fas fa-brain"></i></div>
               <h3>Stroke — FAST Method</h3>
               <i class="fas fa-chevron-down acc-chevron"></i>
             </button>
@@ -175,7 +174,7 @@
           <!-- Choking -->
           <div class="accordion-item" id="choking" role="listitem">
             <button class="accordion-trigger" aria-expanded="false" aria-controls="acc-choking">
-              <div class="acc-icon" style="background:linear-gradient(135deg,#f4a261,#c47a2a)"><i class="fas fa-lungs"></i></div>
+              <div class="acc-icon" style="background:linear-gradient(135deg,#d97706,#b45309)"><i class="fas fa-lungs"></i></div>
               <h3>Choking — Heimlich Maneuver</h3>
               <i class="fas fa-chevron-down acc-chevron"></i>
             </button>
@@ -197,7 +196,7 @@
           <!-- Bleeding -->
           <div class="accordion-item" id="bleeding" role="listitem">
             <button class="accordion-trigger" aria-expanded="false" aria-controls="acc-bleeding">
-              <div class="acc-icon" style="background:linear-gradient(135deg,#e63946,#f4a261)"><i class="fas fa-droplet"></i></div>
+              <div class="acc-icon" style="background:linear-gradient(135deg,#dc2626,#b91c1c)"><i class="fas fa-droplet"></i></div>
               <h3>Severe Bleeding</h3>
               <i class="fas fa-chevron-down acc-chevron"></i>
             </button>
@@ -216,10 +215,32 @@
             </div>
           </div>
 
+          <!-- Allergic Reaction -->
+          <div class="accordion-item" id="allergy" role="listitem">
+            <button class="accordion-trigger" aria-expanded="false" aria-controls="acc-allergy">
+              <div class="acc-icon" style="background:linear-gradient(135deg,#0d9488,#0a7a70)"><i class="fas fa-allergies"></i></div>
+              <h3>Allergic Reaction</h3>
+              <i class="fas fa-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-body" id="acc-allergy" style="display:none">
+              <div class="guide-steps">
+                <div class="guide-step"><span class="step-num">1</span><p>Identify and remove the allergen if possible (food, insect, medication).</p></div>
+                <div class="guide-step"><span class="step-num">2</span><p>For mild reactions: take an antihistamine (e.g. cetirizine or diphenhydramine).</p></div>
+                <div class="guide-step"><span class="step-num">3</span><p>Apply cool compress to itchy or swollen skin areas.</p></div>
+                <div class="guide-step"><span class="step-num">4</span><p>For severe reaction (anaphylaxis): use epinephrine auto-injector (EpiPen) if available.</p></div>
+                <div class="guide-step"><span class="step-num">5</span><p>Call 102 immediately if breathing difficulty, throat swelling, or loss of consciousness occurs.</p></div>
+                <div class="guide-step"><span class="step-num">6</span><p>Lay the person flat with legs elevated unless breathing is difficult — then sit them upright.</p></div>
+              </div>
+              <div class="guide-img">
+                <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&q=80" alt="Allergic reaction first aid" loading="lazy">
+              </div>
+            </div>
+          </div>
+
           <!-- Burns -->
           <div class="accordion-item" id="burn" role="listitem">
             <button class="accordion-trigger" aria-expanded="false" aria-controls="acc-burn">
-              <div class="acc-icon" style="background:linear-gradient(135deg,#f4a261,#e63946)"><i class="fas fa-fire"></i></div>
+              <div class="acc-icon" style="background:linear-gradient(135deg,#d97706,#b45309)"><i class="fas fa-fire"></i></div>
               <h3>Burns</h3>
               <i class="fas fa-chevron-down acc-chevron"></i>
             </button>

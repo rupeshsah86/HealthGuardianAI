@@ -32,6 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ── Device Setup ─────────────────────────────────
 async function _setupDevices() {
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    _showDeviceError('Camera/microphone requires a secure connection (HTTPS or localhost). <a href="https://github.com/" target="_blank">Learn more</a>');
+    return;
+  }
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
     document.getElementById('cameraPreview').srcObject = stream;
@@ -41,8 +45,22 @@ async function _setupDevices() {
     _populateSelect('cameraSelect',  devices.filter(d => d.kind === 'videoinput'),  'Camera');
     _populateSelect('micSelect',     devices.filter(d => d.kind === 'audioinput'),  'Microphone');
     _populateSelect('speakerSelect', devices.filter(d => d.kind === 'audiooutput'), 'Speaker');
-  } catch {
-    Toast.warning('Camera/microphone access denied. You can still join a call.');
+  } catch (err) {
+    const msg = err.name === 'NotAllowedError'
+      ? 'Camera/microphone permission denied. Please allow access in your browser settings.'
+      : 'Could not access camera/microphone. You can still join a call.';
+    _showDeviceError(msg);
+  }
+}
+
+function _showDeviceError(msg) {
+  const grid = document.querySelector('.device-grid');
+  if (grid) {
+    grid.innerHTML = `<div style="grid-column:1/-1;padding:var(--space-6);text-align:center;color:var(--text-muted);background:var(--bg-surface-2);border-radius:var(--border-radius-lg);border:1px dashed var(--border-color)">
+      <i class="fas fa-video-slash" style="font-size:2rem;margin-bottom:var(--space-3);display:block;color:var(--color-warning)"></i>
+      <p style="margin:0">${msg}</p>
+      <p style="margin:var(--space-2) 0 0;font-size:var(--text-sm)">Serve the project via <code>npx serve .</code> or VS Code Live Server to enable camera access.</p>
+    </div>`;
   }
 }
 
@@ -77,34 +95,33 @@ function _bindPreCallControls() {
 // ── Start Call ───────────────────────────────────
 async function _startCall(meetingCode = null) {
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-    localStream = stream;
-    document.getElementById('localVideo').srcObject = stream;
-
-    // Show call UI
-    document.getElementById('preCallSection').style.display = 'none';
-    document.getElementById('callSection').classList.add('active');
-    document.getElementById('pageFooter').style.display = 'none';
-
-    if (meetingCode && typeof meetingCode === 'string') {
-      document.getElementById('meetingIdDisplay').textContent = meetingCode;
+    if (navigator.mediaDevices?.getUserMedia) {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+      localStream = stream;
+      document.getElementById('localVideo').srcObject = stream;
     }
-
-    _startTimer();
-
-    // Simulate doctor connecting
-    setTimeout(() => {
-      document.getElementById('connectionDot').classList.remove('connecting');
-      document.getElementById('connectionText').textContent = 'Connected';
-      _addSystemMsg('Dr. Ravi has joined the consultation');
-      _addMsg('Dr. Ravi', 'Hi! I am Dr. Ravi. How can I help you today?', 'received');
-      Toast.success('Connected to Dr. Ravi');
-    }, 1500);
-
   } catch (err) {
-    Toast.error('Could not access camera/microphone. Please check permissions.');
-    console.error(err);
+    Toast.warning('No camera/microphone access. Joining in audio-only mode.');
   }
+
+  // Show call UI regardless of camera access
+  document.getElementById('preCallSection').style.display = 'none';
+  document.getElementById('callSection').classList.add('active');
+  document.getElementById('pageFooter').style.display = 'none';
+
+  if (meetingCode && typeof meetingCode === 'string') {
+    document.getElementById('meetingIdDisplay').textContent = meetingCode;
+  }
+
+  _startTimer();
+
+  setTimeout(() => {
+    document.getElementById('connectionDot').classList.remove('connecting');
+    document.getElementById('connectionText').textContent = 'Connected';
+    _addSystemMsg('Dr. Ravi has joined the consultation');
+    _addMsg('Dr. Ravi', 'Hi! I am Dr. Ravi. How can I help you today?', 'received');
+    Toast.success('Connected to Dr. Ravi');
+  }, 1500);
 }
 
 // ── Call Controls ────────────────────────────────

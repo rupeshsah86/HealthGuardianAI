@@ -104,28 +104,29 @@ function _bindProfileDropdown() {
   });
 }
 
-// ── Theme Toggle ───────────────────────────────
+// ── Theme Toggle ──────────────────────────────
 function _bindThemeToggle() {
   const toggle = document.querySelector('.theme-toggle');
-  if (!toggle) return;
+  const root   = document.documentElement;
 
-  const saved = StorageService.get(AppConfig.storage.keys.theme, 'light');
-  _applyTheme(saved);
+  const saved = localStorage.getItem('hg_theme') || 'light';
+  _applyTheme(saved, toggle, root);
 
-  toggle.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme') || 'light';
-    const next    = current === 'light' ? 'dark' : 'light';
-    _applyTheme(next);
-    StorageService.set(AppConfig.storage.keys.theme, next);
+  toggle?.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('hg_theme', next);
+    _applyTheme(next, toggle, root);
   });
 }
 
-function _applyTheme(theme) {
-  document.documentElement.setAttribute('data-theme', theme);
-  const icon = document.querySelector('.theme-toggle i');
+function _applyTheme(theme, toggle, root) {
+  root.setAttribute('data-theme', theme);
+  if (!toggle) return;
+  const icon = toggle.querySelector('i');
   if (icon) {
     icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
   }
+  toggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
 }
 
 // ── Active Link ────────────────────────────────

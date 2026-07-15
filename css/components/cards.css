@@ -63,7 +63,7 @@
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 4px;
+  height: 3px;
   background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
   transform: scaleX(0);
   transform-origin: left;
@@ -170,13 +170,11 @@
 
 .quick-card i {
   font-size: 2rem;
-  color: var(--color-primary);
   transition: var(--transition-spring);
 }
 
 .quick-card:hover i {
   transform: scale(1.2);
-  color: var(--color-primary-dark);
 }
 
 .quick-card span {

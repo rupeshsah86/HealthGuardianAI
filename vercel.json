@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "name": "healthguardian",
   "builds": [
     { "src": "**/*", "use": "@vercel/static" }
   ],

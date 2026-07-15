@@ -53,7 +53,7 @@
   background: var(--color-primary-dark);
   border-color: var(--color-primary-dark);
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(230,57,70,0.36);
+  box-shadow: 0 12px 28px rgba(26,111,196,0.32);
   color: var(--color-white);
 }
 
@@ -92,14 +92,14 @@
 }
 
 .btn-accent {
-  background: var(--color-accent);
-  color: var(--color-dark);
-  border-color: var(--color-accent);
+  background: var(--color-secondary);
+  color: var(--color-white);
+  border-color: var(--color-secondary);
   box-shadow: var(--shadow-accent);
 }
 .btn-accent:hover {
-  background: var(--color-accent-dark);
-  border-color: var(--color-accent-dark);
+  background: var(--color-secondary-dark);
+  border-color: var(--color-secondary-dark);
   transform: translateY(-2px);
   color: var(--color-white);
 }
@@ -156,14 +156,14 @@
   width: 180px;
   height: 180px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  background: linear-gradient(135deg, var(--color-emergency) 0%, var(--color-emergency-dark) 100%);
   color: var(--color-white);
   border: none;
   font-size: var(--text-xl);
   font-weight: var(--font-extrabold);
   cursor: pointer;
   position: relative;
-  box-shadow: var(--shadow-primary);
+  box-shadow: 0 8px 24px rgba(220,38,38,0.35);
   transition: var(--transition-spring);
   display: flex;
   flex-direction: column;
@@ -175,7 +175,7 @@
 
 .btn-sos:hover {
   transform: scale(1.06);
-  box-shadow: 0 20px 48px rgba(230,57,70,0.45);
+  box-shadow: 0 20px 48px rgba(220,38,38,0.45);
 }
 
 .btn-sos:active { transform: scale(0.97); }
@@ -184,7 +184,7 @@
   position: absolute;
   inset: -12px;
   border-radius: 50%;
-  border: 3px solid rgba(230,57,70,0.4);
+  border: 3px solid rgba(220,38,38,0.4);
   animation: pulse 2s ease-out infinite;
 }
 
